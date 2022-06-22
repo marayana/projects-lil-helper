@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/fragmentHome"
+        android:icon="@drawable/ic_home"
+        android:title="@string/bottomnav_home"/>
+
+    <item
+        android:id="@+id/nav_nested_notes"
+        android:icon="@drawable/ic_notes"
+        android:title="@string/bottomnav_notes"/>
+
+    <item
+        android:id="@+id/nav_nested_checklists"
+        android:icon="@drawable/ic_lists"
+        android:title="@string/bottomnav_lists"/>
+
+    <item
+        android:id="@+id/nav_nested_recipes"
+        android:icon="@drawable/ic_recipes"
+        android:title="@string/bottomnav_recipes"/>
+
+</menu>

@@ -1,0 +1,51 @@
+<resources>
+    <string name="app_name">lilHelper</string>
+
+    <!-- Bottom Nav -->
+    <string name="bottomnav_home">Home</string>
+    <string name="bottomnav_notes">Notes</string>
+    <string name="bottomnav_lists">Lists</string>
+    <string name="bottomnav_recipes">Recipes</string>
+
+    <!-- Action Bar -->
+    <string name="actionbar_home">Home</string>
+    <string name="actionbar_notes">Notizen</string>
+    <string name="actionbar_add_note">Add Note</string>
+    <string name="actionbar_edit_note">Edit Note</string>
+    <string name="actionbar_lists">Listen</string>
+    <string name="actionbar_recipes">Rezepte</string>
+    <string name="actionbar_recipe_details">{recipeTitle}</string>
+
+
+    <!-- Notes -->
+    <string name="addnote_hint_note_title">Note Title</string>
+    <string name="addnote_hint_note_content">Note Content</string>
+    <string name="addnote_save">Save Note</string>
+    <string name="editnote_save">Save Note</string>
+    <string name="fab_add_note_content_desc">add note</string>
+
+    <!-- CheckLists -->
+    <string name="addchecklist_hint_checklist_title">CheckList Title</string>
+    <string name="addchecklist_hint_checklist_item">CheckList Item</string>
+    <string name="addchecklist_save">Save CheckList</string>
+    <string name="editchecklist_save">Save CheckList</string>
+    <string name="fab_add_checkList_content_desc">add checklist</string>
+
+    <!-- Recipes -->
+    <string name="recipes_title">Rezepte</string>
+
+    <string name="cat_0">Alle</string>
+    <string name="cat_1">Warm</string>
+    <string name="cat_2">Kalt</string>
+    <string name="cat_3">Salat</string>
+    <string name="cat_4">Suppe</string>
+    <string name="cat_5">Basis</string>
+
+    <!-- Recipe Details -->
+    <string name="recipe_details_ings_title">Zutaten</string>
+    <string name="recipe_details_instr_title">Anleitung</string>
+    <string name="recipe_details_create_list">Liste erstellen</string>
+
+
+
+</resources>
