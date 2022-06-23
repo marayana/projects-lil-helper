@@ -10,6 +10,8 @@ import android.view.WindowManager
 import android.widget.Toast
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph
 import androidx.navigation.findNavController
@@ -36,14 +38,22 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(binding.toolbar)
 
 
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
 
         // bottom navigation
         val bottomNav: BottomNavigationView = binding.bottomNav
 
-        val appBarConfiguration = AppBarConfiguration(setOf(
-            R.id.fragmentHome, R.id.fragmentCheckLists, R.id.fragmentNotes, R.id.fragmentRecipes))
+        val appBarConfiguration = AppBarConfiguration(
+            setOf(
+                R.id.fragmentHome,
+                R.id.fragmentCheckLists,
+                R.id.fragmentNotes,
+                R.id.fragmentRecipes,
+                R.id.fragmentSettings
+            )
+        )
         setupActionBarWithNavController(navController, appBarConfiguration)
         bottomNav.setupWithNavController(navController)
 
@@ -59,29 +69,14 @@ class MainActivity : AppCompatActivity() {
 
             return@setOnItemSelectedListener true
         }
-        /*bottomNav.setOnItemSelectedListener { item ->
-            // In order to get the expected behavior, you have to call default Navigation method manually
-
-            Log.e("nav", (item.itemId == R.id.fragmentRecipeDetails).toString())
-            when(item.itemId){
-                R.id.fragmentAddNote -> navController.popBackStack(R.id.fragmentNotes, false)
-                R.id.fragmentEditNote -> navController.popBackStack(R.id.fragmentNotes, false)
-                R.id.fragmentAddCheckList -> navController.popBackStack(R.id.fragmentCheckLists, false)
-                R.id.fragmentRecipeDetails -> navController.popBackStack(R.id.fragmentRecipes,false)
-            }
-
-            NavigationUI.onNavDestinationSelected(item, navController)
-            return@setOnItemSelectedListener true
-        }*/
-
     }
 
     override fun onSupportNavigateUp(): Boolean {
         return navController.navigateUp() || super.onSupportNavigateUp()
     }
 
-    override fun onOptionsItemSelected(item: MenuItem) : Boolean{
-        return when(item.itemId){
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
             R.id.toolbar_settings -> {
                 Log.e("MainActivity", "Settings clicked")
                 true
@@ -97,9 +92,10 @@ class MainActivity : AppCompatActivity() {
 
 /*
 *  TODO: styles
-*  TODO: settings (-> ask again before deleting note/list + excluded ingredients)
+*  TODO: settings (-> ask again before deleting note/list)
 *  TODO: Error handling in recipes (errorDB vs errorAPI)
-*  TODO: Clean up gradle scripts (proper versioning)
 *  TODO: Check if loops in recipe repo are even necessary
 *  TODO: Check why notes repo doesn't need withContext()
+*  TODO: SettingsIngs don't get initialised when recipeDb is empty
+*  TODO: Notes Recycler
 *  */

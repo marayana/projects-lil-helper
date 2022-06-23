@@ -34,20 +34,20 @@ class CheckListsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val rvCheckLists = binding.rvCheckLists
-
+        /*val rvCheckLists = binding.rvCheckLists
         adapter = if (viewModel.checkLists.value != null){
             CheckListsAdapter(viewModel.checkLists.value!!, requireContext(), editCheckList, deleteCheckList)
         } else {
             CheckListsAdapter(emptyList(), requireContext(), editCheckList, deleteCheckList)
         }
-        rvCheckLists.adapter = adapter
+        rvCheckLists.adapter = adapter*/
 
 
         viewModel.checkLists.observe(
             viewLifecycleOwner,
             Observer {
-                adapter.submitList(it)
+                //adapter.submitList(it)
+                //(binding.rvCheckLists.adapter as CheckListsAdapter).submitList(it)
             }
         )
 

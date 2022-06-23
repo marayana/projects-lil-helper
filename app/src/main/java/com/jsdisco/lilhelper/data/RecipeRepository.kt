@@ -44,7 +44,7 @@ class RecipeRepository(private val api: RecipeApi, private val database: AppData
             )
             database.appDatabaseDao.insertRecipe(newRecipe)
             recipeFromApi.ingredients.forEach{
-                database.appDatabaseDao.insertIngredient(Ingredient(it._id, it.name, it.amount, it.unit, false))
+                database.appDatabaseDao.insertIngredient(Ingredient(it._id, it.name, it.amount, it.unit))
                 database.appDatabaseDao.insertRecipeIngredientCrossRef(RecipeIngredientCrossRef(recipeFromApi._id, it._id))
             }
         }

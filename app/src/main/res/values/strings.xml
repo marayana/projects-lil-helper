@@ -6,6 +6,7 @@
     <string name="bottomnav_notes">Notes</string>
     <string name="bottomnav_lists">Lists</string>
     <string name="bottomnav_recipes">Recipes</string>
+    <string name="bottomnav_settings">Settings</string>
 
     <!-- Action Bar -->
     <string name="actionbar_home">Home</string>
@@ -46,6 +47,11 @@
     <string name="recipe_details_instr_title">Anleitung</string>
     <string name="recipe_details_create_list">Liste erstellen</string>
 
+    <!-- Settings -->
+    <string name="settings_title">Settings</string>
+    <string name="settings_label_notes">Erneut fragen, bevor eine Notiz gelöscht wird</string>
+    <string name="settings_label_lists">Erneut fragen, bevor eine Liste gelöscht wird</string>
+    <string name="settings_ings_title">Zutaten, die in aus Rezepten erstellten Listen erscheinen:</string>
 
 
 </resources>

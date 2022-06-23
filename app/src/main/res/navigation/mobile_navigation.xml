@@ -5,15 +5,23 @@
     android:id="@+id/mobile_navigation"
     app:startDestination="@+id/fragmentHome">
 
+    <!-- HOME -->
     <fragment
         android:id="@+id/fragmentHome"
         android:name="com.jsdisco.lilhelper.ui.home.HomeFragment"
-        android:label= "@string/bottomnav_home"
+        android:label="@string/bottomnav_home"
         tools:layout="@layout/fragment_home" />
 
+    <!-- SETTINGS -->
+    <fragment
+        android:id="@+id/fragmentSettings"
+        android:name="com.jsdisco.lilhelper.ui.settings.SettingsFragment"
+        android:label="@string/bottomnav_settings"
+        tools:layout="@layout/fragment_settings" />
 
     <!-- NOTES -->
-    <navigation android:id="@+id/nav_nested_notes"
+    <navigation
+        android:id="@+id/nav_nested_notes"
         app:startDestination="@id/fragmentNotes">
         <fragment
             android:id="@+id/fragmentNotes"
@@ -45,13 +53,14 @@
 
 
     <!-- CHECKLISTS -->
-    <navigation android:id="@+id/nav_nested_checklists"
+    <navigation
+        android:id="@+id/nav_nested_checklists"
         app:startDestination="@id/fragmentCheckLists">
         <fragment
-             android:id="@+id/fragmentCheckLists"
-             android:name="com.jsdisco.lilhelper.ui.checklists.CheckListsFragment"
-             android:label="@string/bottomnav_lists"
-             tools:layout="@layout/fragment_check_lists">
+            android:id="@+id/fragmentCheckLists"
+            android:name="com.jsdisco.lilhelper.ui.checklists.CheckListsFragment"
+            android:label="@string/bottomnav_lists"
+            tools:layout="@layout/fragment_check_lists">
             <action
                 android:id="@+id/action_fragmentCheckLists_to_fragmentAddCheckList"
                 app:destination="@id/fragmentAddCheckList" />
@@ -64,9 +73,9 @@
     </navigation>
 
 
-
     <!-- RECIPES -->
-    <navigation android:id="@+id/nav_nested_recipes"
+    <navigation
+        android:id="@+id/nav_nested_recipes"
         app:startDestination="@id/fragmentRecipes">
         <fragment
             android:id="@+id/fragmentRecipes"
@@ -93,4 +102,6 @@
             android:id="@+id/action_global_nav_nested_checklists"
             app:destination="@id/nav_nested_checklists" />
     </navigation>
+
+
 </navigation>

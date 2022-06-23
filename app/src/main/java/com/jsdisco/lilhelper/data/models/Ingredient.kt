@@ -9,6 +9,5 @@ data class Ingredient(
     val i_id: String,
     val i_name: String,
     val i_amount: String,
-    val i_unit: String,
-    val excluded_from_shopping_list: Boolean = false
+    val i_unit: String
 )

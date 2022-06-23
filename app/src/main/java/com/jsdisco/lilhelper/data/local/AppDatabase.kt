@@ -14,7 +14,8 @@ import com.jsdisco.lilhelper.data.models.relations.RecipeIngredientCrossRef
         CheckListItem::class,
         Recipe::class,
         Ingredient::class,
-        RecipeIngredientCrossRef::class
+        RecipeIngredientCrossRef::class,
+        SettingsIngredient::class
     ], version = 1
 )
 abstract class AppDatabase : RoomDatabase() {

@@ -31,6 +31,9 @@ interface AppDatabaseDao {
     @Query("SELECT * FROM Recipe")
     fun getRecipes() : List<Recipe>
 
+    @Query("SElECT * FROM Ingredient")
+    fun getIngredients() : List<Ingredient>
+
     @Transaction
     @Query("SELECT * FROM Recipe WHERE r_id = :id")
     suspend fun getRecipeById(id: String) : RecipeWithIngredients
@@ -97,4 +100,22 @@ interface AppDatabaseDao {
 
     @Query("DELETE FROM Note")
     suspend fun deleteAllNotes()
+
+
+    // SETTINGS INGREDIENTS
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertSettingsIng(settingsIng: SettingsIngredient)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertAllSettingsIngs(ings: List<SettingsIngredient>)
+
+    @Update
+    suspend fun updateSettingsIng(settingsIng: SettingsIngredient)
+
+    @Query("SELECT * FROM SettingsIngredient ORDER BY si_name")
+    fun getSettingsIngs() : List<SettingsIngredient>
+
+    @Query("SELECT * FROM SettingsIngredient WHERE si_id = :id")
+    fun getSettingsIngById(id: Long) : SettingsIngredient
+
 }

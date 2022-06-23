@@ -21,4 +21,9 @@
         android:icon="@drawable/ic_recipes"
         android:title="@string/bottomnav_recipes"/>
 
+    <item
+        android:id="@+id/fragmentSettings"
+        android:icon="@drawable/ic_settings"
+        android:title="@string/bottomnav_settings"/>
+
 </menu>
