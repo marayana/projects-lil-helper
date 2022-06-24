@@ -10,8 +10,6 @@ import com.jsdisco.lilhelper.data.models.relations.RecipeIngredientCrossRef
 @Database(
     entities = [
         Note::class,
-        CheckList::class,
-        CheckListItem::class,
         Recipe::class,
         Ingredient::class,
         RecipeIngredientCrossRef::class,
@@ -21,24 +19,32 @@ import com.jsdisco.lilhelper.data.models.relations.RecipeIngredientCrossRef
 abstract class AppDatabase : RoomDatabase() {
     abstract val appDatabaseDao: AppDatabaseDao
 
-    /*companion object {
+    companion object {
         @Volatile
         private var INSTANCE: AppDatabase? = null
 
-        fun getInstance(context: Context): AppDatabase {
+        fun getDatabaseInstance(context: Context): AppDatabase {
             synchronized(this) {
-                return INSTANCE ?: Room.databaseBuilder(
-                    context.applicationContext,
-                    AppDatabase::class.java,
-                    "app_db"
-                ).build().also { INSTANCE = it }
+                var instance = INSTANCE
+
+                if (instance == null){
+                    instance = Room.databaseBuilder(
+                        context.applicationContext,
+                        AppDatabase::class.java,
+                        "app_database"
+                    ).build()
+
+                    INSTANCE = instance
+                }
+
+                return instance
             }
         }
-    }*/
+    }
 }
 
 
-
+/*
 private lateinit var INSTANCE: AppDatabase
 
 fun getDatabase(context: Context): AppDatabase {
@@ -53,4 +59,4 @@ fun getDatabase(context: Context): AppDatabase {
     }
     return INSTANCE
 }
-
+*/

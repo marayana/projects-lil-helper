@@ -3,7 +3,6 @@ package com.jsdisco.lilhelper.data.local
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.jsdisco.lilhelper.data.models.*
-import com.jsdisco.lilhelper.data.models.relations.CheckListWithItems
 import com.jsdisco.lilhelper.data.models.relations.RecipeIngredientCrossRef
 import com.jsdisco.lilhelper.data.models.relations.RecipeWithIngredients
 import java.util.*
@@ -31,8 +30,14 @@ interface AppDatabaseDao {
     @Query("SELECT * FROM Recipe")
     fun getRecipes() : List<Recipe>
 
+    @Query("SELECT COUNT(*) FROM Recipe")
+    fun getRecipeCount() : Int
+
     @Query("SElECT * FROM Ingredient")
     fun getIngredients() : List<Ingredient>
+
+    @Query("SELECT * FROM Ingredient WHERE i_name = :name")
+    fun getIngredientByName(name: String) : Ingredient
 
     @Transaction
     @Query("SELECT * FROM Recipe WHERE r_id = :id")
@@ -47,42 +52,6 @@ interface AppDatabaseDao {
     @Query("DELETE FROM RecipeIngredientCrossRef")
     fun deleteRecipeIngredientCrossRef()
 
-
-    // CHECKLISTS TABLES
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertCheckList(checkList: CheckList)
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertCheckListItem(checkListItem: CheckListItem)
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAllCheckListItems(items: List<CheckListItem>)
-
-    @Transaction
-    @Query("SELECT * FROM CheckList WHERE cl_id = :id")
-    suspend fun getCheckListWithItems(id: UUID) : List<CheckListWithItems>
-
-    @Transaction
-    @Query("SELECT * FROM CheckList WHERE cl_id = :id")
-    suspend fun getCheckListById(id: UUID) : CheckListWithItems
-
-    //@Update
-    //suspend fun updateCheckList(checkList: CheckList)
-
-    //@Update
-    //suspend fun updateCheckListById(id: UUID)
-
-    @Query("SELECT * FROM CheckList")
-    fun getCheckLists() : List<CheckList>
-
-    @Query("DELETE FROM CheckList WHERE cl_id = :id")
-    fun deleteCheckListById(id: UUID)
-
-    @Query("DELETE FROM CheckListItem WHERE cli_id = :id")
-    fun deleteCheckListItemById(id: Long)
-
-    @Query("DELETE FROM CheckListItem WHERE cl_id = :id")
-    fun deleteCheckListItemsByCheckListId(id: UUID)
 
 
     // NOTES TABLE
@@ -117,5 +86,11 @@ interface AppDatabaseDao {
 
     @Query("SELECT * FROM SettingsIngredient WHERE si_id = :id")
     fun getSettingsIngById(id: Long) : SettingsIngredient
+
+    @Query("SELECT * FROM SettingsIngredient WHERE si_included = 0")
+    fun getExcludedIngredients() : List<SettingsIngredient>
+
+    @Query("SELECT COUNT(*) FROM SettingsIngredient")
+    fun getSettingsIngsCount() : Int
 
 }

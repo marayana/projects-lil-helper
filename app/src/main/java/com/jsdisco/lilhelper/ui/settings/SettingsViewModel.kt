@@ -1,46 +1,24 @@
 package com.jsdisco.lilhelper.ui.settings
 
 import android.app.Application
-import android.content.Context
-import android.util.Log
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.jsdisco.lilhelper.data.SettingsRepository
-import com.jsdisco.lilhelper.data.local.AppDatabase
-import com.jsdisco.lilhelper.data.local.getDatabase
+import com.jsdisco.lilhelper.data.AppRepository
 import com.jsdisco.lilhelper.data.models.SettingsIngredient
 import kotlinx.coroutines.launch
 
 
 class SettingsViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val database = getDatabase(application)
-    private val repo = SettingsRepository(database)
+    private val repo = AppRepository.getRepoInstance(application)
 
-    val settings = repo.settingsIngs
-
-    init {
-        loadSettings()
-    }
-
-    private fun loadSettings(){
-        viewModelScope.launch {
-            repo.initSettings()
-        }
-    }
+    val settingsIngs = repo.settingsIngs
 
     fun toggleIngCheckbox(settingsIng: SettingsIngredient){
         viewModelScope.launch{
-            settingsIng.si_included = !settingsIng.si_included
-            database.appDatabaseDao.updateSettingsIng(settingsIng)
+            repo.toggleSettingsIngCheckbox(settingsIng)
         }
     }
-
 }
 
 

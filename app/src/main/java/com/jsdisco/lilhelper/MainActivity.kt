@@ -48,7 +48,6 @@ class MainActivity : AppCompatActivity() {
         val appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.fragmentHome,
-                R.id.fragmentCheckLists,
                 R.id.fragmentNotes,
                 R.id.fragmentRecipes,
                 R.id.fragmentSettings
@@ -91,11 +90,13 @@ class MainActivity : AppCompatActivity() {
 }
 
 /*
+*  Possibility? One global setup function in MainActivity/Home Screen when the app starts, which fills the database once if it's empty
+*
+*  TODO: REMOVE LISTS
+*  TODO: Input validation when adding/editing notes
 *  TODO: styles
 *  TODO: settings (-> ask again before deleting note/list)
 *  TODO: Error handling in recipes (errorDB vs errorAPI)
 *  TODO: Check if loops in recipe repo are even necessary
-*  TODO: Check why notes repo doesn't need withContext()
-*  TODO: SettingsIngs don't get initialised when recipeDb is empty
-*  TODO: Notes Recycler
+*  TODO: Check why notes repo doesn't need withContext() (probably because DAO returns LiveData?)
 *  */

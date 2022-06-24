@@ -42,8 +42,6 @@ class SettingsAdapter(
         holder.cbIng.isChecked = setting.si_included
 
         holder.cbIng.setOnClickListener {
-
-            Log.e("SettingsAdapter", holder.cbIng.isChecked.toString())
             onCheckboxClick(setting)
         }
     }

@@ -7,14 +7,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Transformations.map
 import androidx.navigation.fragment.findNavController
+import com.jsdisco.lilhelper.data.models.Note
 import com.jsdisco.lilhelper.databinding.FragmentRecipeDetailsBinding
-import com.jsdisco.lilhelper.ui.checklists.CheckListsViewModel
+import com.jsdisco.lilhelper.ui.notes.NotesViewModel
 
 class RecipeDetailsFragment : Fragment() {
 
     private val viewModel: RecipesViewModel by activityViewModels()
-    private val checkListsViewModel: CheckListsViewModel by activityViewModels()
+    private val notesViewModel: NotesViewModel by activityViewModels()
     private lateinit var binding: FragmentRecipeDetailsBinding
 
     private var recipeTitle: String = ""
@@ -47,8 +49,20 @@ class RecipeDetailsFragment : Fragment() {
             binding.tvRecipeDetailsInstr.text = recipe.recipe.r_instructions
 
             binding.btnRecipeDetailsCreateList.setOnClickListener {
-                checkListsViewModel.createListFromRecipe(recipe.recipe.r_title, recipe.ingredients.map{"${it.i_name} ${it.i_amount} ${it.i_unit} "})
-                findNavController().navigate(RecipeDetailsFragmentDirections.actionGlobalNavNestedChecklists())
+                val excludedIngs = viewModel.settingsIngs.value?.filter { !it.si_included }?.map { it.si_name }
+
+                val ingItems = if (excludedIngs != null){
+                    val filtered = recipe.ingredients.filter{!excludedIngs.contains(it.i_name)}
+                    filtered.map{"${it.i_name} ${it.i_amount} ${it.i_unit} "}
+                } else {
+                    Log.e("...", "Test2")
+                    recipe.ingredients.map{"${it.i_name} ${it.i_amount} ${it.i_unit} "}
+                }
+                val noteContent = ingItems.joinToString(separator = "\n")
+                val newNote = Note(title = recipe.recipe.r_title, content = noteContent)
+
+                notesViewModel.insertNote(newNote)
+                findNavController().navigate(RecipeDetailsFragmentDirections.actionGlobalNavNestedNotes())
             }
         }
     }

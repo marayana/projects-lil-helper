@@ -2,21 +2,14 @@ package com.jsdisco.lilhelper.ui.settings
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.datastore.core.DataStore
-import androidx.datastore.dataStore
-import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.jsdisco.lilhelper.adapter.SettingsAdapter
-import com.jsdisco.lilhelper.data.SettingsRepository
 import com.jsdisco.lilhelper.data.models.SettingsIngredient
 import com.jsdisco.lilhelper.databinding.FragmentSettingsBinding
 //import com.jsdisco.lilhelper.ui.settings.SettingsViewModel.Factory
@@ -33,6 +26,7 @@ class SettingsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+
         binding = FragmentSettingsBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -44,7 +38,7 @@ class SettingsFragment : Fragment() {
         val adapter = SettingsAdapter(emptyList(), onCheckBoxClick)
         rvSettings.adapter = adapter
 
-        viewModel.settings.observe(
+        viewModel.settingsIngs.observe(
             viewLifecycleOwner,
             Observer{
                 adapter.submitList(it)

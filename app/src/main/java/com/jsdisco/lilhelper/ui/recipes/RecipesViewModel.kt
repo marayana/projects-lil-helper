@@ -3,29 +3,27 @@ package com.jsdisco.lilhelper.ui.recipes
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.*
-import com.jsdisco.lilhelper.data.RecipeRepository
-import com.jsdisco.lilhelper.data.local.AppDatabase
-import com.jsdisco.lilhelper.data.local.getDatabase
-import com.jsdisco.lilhelper.data.models.Ingredient
+import com.jsdisco.lilhelper.data.AppRepository
 import com.jsdisco.lilhelper.data.models.relations.RecipeWithIngredients
-import com.jsdisco.lilhelper.data.remote.RecipeApi
 import kotlinx.coroutines.launch
 
 enum class ApiStatus { LOADING, ERROR, DONE }
 
 class RecipesViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val database = getDatabase(application)
-    private val repo = RecipeRepository(RecipeApi, database)
+    private val repo = AppRepository.getRepoInstance(application)
 
     val recipes = repo.recipes
+    //val excluded = repo.excludedIngs
+    val settingsIngs = repo.settingsIngs
 
     private val _loading = MutableLiveData<ApiStatus>()
     val loading: LiveData<ApiStatus>
         get() = _loading
 
     init {
-        loadRecipes()
+        //loadRecipes()
+        //loadExcludedIngredients()
     }
 
     fun downloadRecipesFromApi(){
@@ -54,7 +52,7 @@ class RecipesViewModel(application: Application) : AndroidViewModel(application)
         }
         return filtered
     }
-
+/*
     private fun loadRecipes(){
         viewModelScope.launch {
             _loading.value = ApiStatus.LOADING
@@ -67,6 +65,7 @@ class RecipesViewModel(application: Application) : AndroidViewModel(application)
             if (recipes.value.isNullOrEmpty()){
                 try {
                     repo.getRecipesFromApi()
+                    //repo.initSettingsIngs()
                     _loading.value = ApiStatus.DONE
                 } catch(e: Exception){
                     Log.e("RecipesViewModel", "Error fetching recipes from API: $e")
@@ -75,6 +74,18 @@ class RecipesViewModel(application: Application) : AndroidViewModel(application)
             } else {
                 _loading.value = ApiStatus.DONE
             }
+
+            loadExcludedIngredients()
         }
     }
+
+    private fun loadExcludedIngredients(){
+        viewModelScope.launch {
+            try {
+                repo.getExcludedIngredients()
+            } catch(e: Exception){
+                Log.e("RecipesViewModel", "Error loading excluded ingredients: $e")
+            }
+        }
+    }*/
 }
