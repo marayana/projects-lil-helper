@@ -11,12 +11,13 @@ import androidx.lifecycle.Transformations.map
 import androidx.navigation.fragment.findNavController
 import com.jsdisco.lilhelper.data.models.Note
 import com.jsdisco.lilhelper.databinding.FragmentRecipeDetailsBinding
+import com.jsdisco.lilhelper.ui.checklists.ChecklistsViewModel
 import com.jsdisco.lilhelper.ui.notes.NotesViewModel
 
 class RecipeDetailsFragment : Fragment() {
 
     private val viewModel: RecipesViewModel by activityViewModels()
-    private val notesViewModel: NotesViewModel by activityViewModels()
+    private val checklistsViewModel: ChecklistsViewModel by activityViewModels()
     private lateinit var binding: FragmentRecipeDetailsBinding
 
     private var recipeTitle: String = ""
@@ -55,14 +56,12 @@ class RecipeDetailsFragment : Fragment() {
                     val filtered = recipe.ingredients.filter{!excludedIngs.contains(it.i_name)}
                     filtered.map{"${it.i_name} ${it.i_amount} ${it.i_unit} "}
                 } else {
-                    Log.e("...", "Test2")
                     recipe.ingredients.map{"${it.i_name} ${it.i_amount} ${it.i_unit} "}
                 }
-                val noteContent = ingItems.joinToString(separator = "\n")
-                val newNote = Note(title = recipe.recipe.r_title, content = noteContent)
 
-                notesViewModel.insertNote(newNote)
-                findNavController().navigate(RecipeDetailsFragmentDirections.actionGlobalNavNestedNotes())
+                checklistsViewModel.insertChecklistItemsFromRecipe(recipe.recipe.r_title, ingItems)
+
+                findNavController().navigate(RecipeDetailsFragmentDirections.actionGlobalNavNestedChecklists())
             }
         }
     }

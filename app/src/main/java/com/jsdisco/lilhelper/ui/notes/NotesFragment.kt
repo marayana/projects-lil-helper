@@ -42,7 +42,7 @@ class NotesFragment : Fragment() {
             viewLifecycleOwner,
             Observer {
                 adapter.submitList(it)
-                binding.rvNotes.adapter = NotesAdapter(it, editNote, deleteNote)
+                //binding.rvNotes.adapter = NotesAdapter(it, editNote, deleteNote)
             }
         )
 

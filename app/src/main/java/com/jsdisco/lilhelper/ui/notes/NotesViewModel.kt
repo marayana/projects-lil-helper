@@ -13,12 +13,18 @@ class NotesViewModel(application: Application) : AndroidViewModel(application) {
     val notes = repo.notes
 
     fun insertNote(note: Note){
+        if (note.title == ""){
+            note.title = "Note Title"
+        }
         viewModelScope.launch{
             repo.insertNote(note)
         }
     }
 
     fun updateNote(note: Note){
+        if (note.title == ""){
+            note.title = "Note Title"
+        }
         viewModelScope.launch {
             repo.updateNote(note)
         }

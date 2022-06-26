@@ -53,7 +53,23 @@
 
 
     <!-- CHECKLISTS -->
-
+    <navigation android:id="@+id/nav_nested_checklists"
+        app:startDestination="@id/fragmentChecklists">
+        <fragment
+            android:id="@+id/fragmentChecklists"
+            android:name="com.jsdisco.lilhelper.ui.checklists.ChecklistsFragment"
+            android:label="@string/bottomnav_lists"
+            tools:layout="@layout/fragment_checklists">
+            <action
+                android:id="@+id/action_fragmentChecklists_to_fragmentAddChecklist"
+                app:destination="@id/fragmentAddChecklist" />
+        </fragment>
+        <fragment
+            android:id="@+id/fragmentAddChecklist"
+            android:name="com.jsdisco.lilhelper.ui.checklists.AddChecklistFragment"
+            android:label="@string/bottomnav_lists"
+            tools:layout="@layout/fragment_add_checklist" />
+    </navigation>
 
     <!-- RECIPES -->
     <navigation
@@ -81,9 +97,10 @@
                 app:argType="integer" />
         </fragment>
         <action
-            android:id="@+id/action_global_nav_nested_notes"
-            app:destination="@id/nav_nested_notes" />
+            android:id="@+id/action_global_nav_nested_checklists"
+            app:destination="@id/nav_nested_checklists" />
     </navigation>
+
 
 
 </navigation>

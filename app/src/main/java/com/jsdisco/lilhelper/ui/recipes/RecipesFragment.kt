@@ -43,8 +43,8 @@ class RecipesFragment : Fragment() {
         }
 
         binding.cgCategories.setOnCheckedStateChangeListener { _, checkedIds ->
-            var checked: String = ""
-            checked = if (checkedIds.isEmpty()){
+
+            val checked = if (checkedIds.isEmpty()){
                 binding.chipCatAll.isChecked = true
                 "all"
             } else {

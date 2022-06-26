@@ -3,4 +3,11 @@
     <style name="custom_font" parent="android:Widget.TextView">
         <item name="android:fontFamily">@font/open_sans</item>
     </style>
+    <!--<style name="custom_toolbar" parent="android:Widget.Toolbar">
+        <item name="android:iconTint">@color/white</item>
+        <item name="android:tint">@color/white</item>
+    </style>
+    <style name="custom_material_toolbar" parent="android:Widget.Material.Toolbar">
+        <item name="android:iconTint">@color/white</item>
+    </style>-->
 </resources>

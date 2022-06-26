@@ -10,6 +10,7 @@ import com.jsdisco.lilhelper.data.models.relations.RecipeIngredientCrossRef
 @Database(
     entities = [
         Note::class,
+        ChecklistItem::class,
         Recipe::class,
         Ingredient::class,
         RecipeIngredientCrossRef::class,

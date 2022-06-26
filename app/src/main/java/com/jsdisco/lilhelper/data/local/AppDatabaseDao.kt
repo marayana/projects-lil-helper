@@ -53,6 +53,23 @@ interface AppDatabaseDao {
     fun deleteRecipeIngredientCrossRef()
 
 
+    // CHECKLISTITEMS TABLE
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertChecklistItem(item: ChecklistItem)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertManyChecklistItems(items: List<ChecklistItem>)
+
+    @Update
+    suspend fun updateChecklistItem(item: ChecklistItem)
+
+    @Query("DELETE FROM ChecklistItem WHERE cl_id = :listId")
+    suspend fun deleteChecklistItems(listId: UUID)
+
+    @Query("SELECT * FROM ChecklistItem")
+    fun getChecklistItems() : LiveData<List<ChecklistItem>>
+
 
     // NOTES TABLE
     @Insert(onConflict = OnConflictStrategy.REPLACE)

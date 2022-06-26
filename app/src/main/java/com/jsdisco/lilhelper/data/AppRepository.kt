@@ -11,6 +11,7 @@ import com.jsdisco.lilhelper.data.models.relations.RecipeWithIngredients
 import com.jsdisco.lilhelper.data.remote.RecipeApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import java.util.*
 
 
 class AppRepository(private val database: AppDatabase) {
@@ -27,6 +28,8 @@ class AppRepository(private val database: AppDatabase) {
 
     val notes: LiveData<List<Note>> = database.appDatabaseDao.getNotes()
 
+    val checklistItems: LiveData<List<ChecklistItem>> = database.appDatabaseDao.getChecklistItems()
+
 
     /** NOTES - PUBLIC */
 
@@ -34,7 +37,7 @@ class AppRepository(private val database: AppDatabase) {
         try {
             database.appDatabaseDao.insertNote(note)
         } catch(e: Exception){
-            Log.e("AppRepository", "Error inserting note into database: $e")
+            Log.e("AppRepo", "Error inserting note into database: $e")
         }
     }
 
@@ -51,6 +54,41 @@ class AppRepository(private val database: AppDatabase) {
             database.appDatabaseDao.deleteNoteById(note.id)
         } catch(e: Exception){
             Log.e("AppRepository", "Error deleting note with id ${note.id}: $e")
+        }
+    }
+
+
+    /** LISTS - PUBLIC */
+
+    suspend fun insertChecklistItems(items: List<ChecklistItem>){
+        try {
+            database.appDatabaseDao.insertManyChecklistItems(items)
+        } catch(e: Exception){
+            Log.e("AppRepo", "Error inserting checklistItems into database: $e")
+        }
+    }
+
+    suspend fun insertChecklistItem(item: ChecklistItem){
+        try {
+            database.appDatabaseDao.insertChecklistItem(item)
+        } catch(e: Exception){
+            Log.e("AppRepo", "Error inserting checklistItem into database: $e")
+        }
+    }
+
+    suspend fun updateChecklistItem(item: ChecklistItem){
+        try{
+            database.appDatabaseDao.updateChecklistItem(item)
+        } catch(e: Exception){
+            Log.e("AppRepo", "Error updating checklistItem in database: $e")
+        }
+    }
+
+    suspend fun deleteChecklistItems(listId: UUID){
+        try{
+            database.appDatabaseDao.deleteChecklistItems(listId)
+        } catch(e: Exception){
+            Log.e("AppRepo", "Error deleting checklistItems from database: $e")
         }
     }
 
@@ -162,8 +200,6 @@ class AppRepository(private val database: AppDatabase) {
     }
 
 
-
-
     companion object {
         private var repo: AppRepository? = null
 
@@ -173,5 +209,4 @@ class AppRepository(private val database: AppDatabase) {
 
         private fun buildRepo(database: AppDatabase) : AppRepository = AppRepository(database)
     }
-
 }
