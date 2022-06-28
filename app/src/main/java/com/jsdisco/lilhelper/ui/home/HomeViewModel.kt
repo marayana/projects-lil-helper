@@ -18,10 +18,9 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
     val loading: LiveData<Status>
         get() = _loading
 
-
-
     init {
         viewModelScope.launch {
+            repo.initSettings(application.applicationContext)
             repo.initRecipeDB()
             _loading.value = Status.DONE
         }

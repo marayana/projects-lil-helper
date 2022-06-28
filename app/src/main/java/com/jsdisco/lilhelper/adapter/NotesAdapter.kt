@@ -1,6 +1,8 @@
 package com.jsdisco.lilhelper.adapter
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
+import android.app.ProgressDialog.show
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +13,7 @@ import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.jsdisco.lilhelper.R
 import com.jsdisco.lilhelper.data.models.Note
+//import com.jsdisco.lilhelper.ui.DeleteDialog
 
 
 class NotesAdapter(
@@ -26,7 +29,6 @@ class NotesAdapter(
     }
 
     class ItemViewHolder(view: View) : RecyclerView.ViewHolder(view){
-        val cvNote: CardView = view.findViewById(R.id.cv_item_note)
         val tvNoteTitle: TextView = view.findViewById(R.id.tv_item_notes_title)
         val tvNoteContent: TextView = view.findViewById(R.id.tv_item_notes_content)
         val ibNoteEdit: ImageButton = view.findViewById(R.id.ib_item_note_edit)
@@ -52,6 +54,7 @@ class NotesAdapter(
 
         holder.ibNoteDelete.setOnClickListener {
             deleteNote(note)
+            //val dialog = DeleteDialog()
         }
     }
 

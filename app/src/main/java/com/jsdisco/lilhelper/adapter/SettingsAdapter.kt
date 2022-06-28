@@ -15,7 +15,7 @@ import com.jsdisco.lilhelper.data.models.SettingsIngredient
 
 class SettingsAdapter(
     private var dataset: List<SettingsIngredient>,
-    private val onCheckboxClick: (setting: SettingsIngredient) -> Unit
+    private val onIngCheckboxClick: (setting: SettingsIngredient) -> Unit
 ) : RecyclerView.Adapter<SettingsAdapter.ItemViewHolder>() {
 
     @SuppressLint("NotifyDataSetChanged")
@@ -42,7 +42,7 @@ class SettingsAdapter(
         holder.cbIng.isChecked = setting.si_included
 
         holder.cbIng.setOnClickListener {
-            onCheckboxClick(setting)
+            onIngCheckboxClick(setting)
         }
     }
 

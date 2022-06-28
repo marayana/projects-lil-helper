@@ -2,6 +2,7 @@ package com.jsdisco.lilhelper.ui.settings
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -35,7 +36,7 @@ class SettingsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val rvSettings = binding.rvSettingsIngs
-        val adapter = SettingsAdapter(emptyList(), onCheckBoxClick)
+        val adapter = SettingsAdapter(emptyList(), onIngCheckBoxClick)
         rvSettings.adapter = adapter
 
         viewModel.settingsIngs.observe(
@@ -44,23 +45,21 @@ class SettingsFragment : Fragment() {
                 adapter.submitList(it)
             }
         )
+
+        Log.e("SettingsFragment", (viewModel.settingsAskDeleteNote.value == true).toString())
+
+        binding.switchSettingsNotes.isChecked = viewModel.settingsAskDeleteNote.value == true
+        binding.switchSettingsLists.isChecked = viewModel.settingsAskDeleteList.value == true
+
+        binding.switchSettingsNotes.setOnClickListener{
+            viewModel.toggleSettingsSwitch("prefDeleteNote")
+        }
+        binding.switchSettingsLists.setOnClickListener {
+            viewModel.toggleSettingsSwitch("prefDeleteList")
+        }
     }
 
-    private val onCheckBoxClick = {setting: SettingsIngredient ->
+    private val onIngCheckBoxClick = {setting: SettingsIngredient ->
         viewModel.toggleIngCheckbox(setting)
     }
 }
-
-/*private val viewModel: SettingsViewModel by lazy {
-            val activity = requireNotNull(this.activity){
-                "blah"
-            }
-            ViewModelProvider.of(this, Factory(activity.application))
-                .get(SettingsViewModel::class.java)
-        }*/
-
-/*        /*val settingsRepo = SettingsRepository()
-        val factory = SettingsViewModel.Factory(settingsRepo)
-        viewModel = ViewModelProvider(this, factory).get(SettingsViewModel::class.java)*/
-
-        */

@@ -35,5 +35,4 @@ class AddNoteFragment : Fragment() {
             findNavController().navigateUp()
         }
     }
-
 }

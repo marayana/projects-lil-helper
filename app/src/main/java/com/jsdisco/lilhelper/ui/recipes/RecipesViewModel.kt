@@ -14,17 +14,11 @@ class RecipesViewModel(application: Application) : AndroidViewModel(application)
     private val repo = AppRepository.getRepoInstance(application)
 
     val recipes = repo.recipes
-    //val excluded = repo.excludedIngs
     val settingsIngs = repo.settingsIngs
 
     private val _loading = MutableLiveData<ApiStatus>()
     val loading: LiveData<ApiStatus>
         get() = _loading
-
-    init {
-        //loadRecipes()
-        //loadExcludedIngredients()
-    }
 
     fun downloadRecipesFromApi(){
         viewModelScope.launch {

@@ -74,24 +74,13 @@ class MainActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         return navController.navigateUp() || super.onSupportNavigateUp()
     }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.toolbar_settings -> {
-                Log.e("MainActivity", "Settings clicked")
-                true
-            }
-            R.id.toolbar_cloud -> {
-                Log.e("MainActivity", "Download clicked")
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
 }
 
 /*
 *
-*  TODO: styles (back arrow in toolbar + dark mode)
-*  TODO: settings (-> ask again before deleting note/list)
+*  TODO: how to check for prefs already saved?
+*  TODO: check for API call fail on app load
+*  TODO: styles (dark mode)
+*  TODO: Home Screen
+*  TODO: cleanup
 *  */

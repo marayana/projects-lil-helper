@@ -3,19 +3,20 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable/ic_arrow_back.xml" value="0.2235" />
         <entry key="app/src/main/res/drawable/ic_dashboard_black_24dp.xml" value="0.2725" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.18" />
         <entry key="app/src/main/res/layout/fragment_add_check_list.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_add_checklist.xml" value="0.3388888888888889" />
         <entry key="app/src/main/res/layout/fragment_add_note.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_check_lists.xml" value="0.22" />
         <entry key="app/src/main/res/layout/fragment_edit_note.xml" value="0.24322916666666666" />
-        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.3380208333333333" />
+        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_lists.xml" value="0.3380208333333333" />
         <entry key="app/src/main/res/layout/fragment_notes.xml" value="0.22" />
         <entry key="app/src/main/res/layout/fragment_recipe_details.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_recipes.xml" value="0.22" />
-        <entry key="app/src/main/res/layout/fragment_settings.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_settings.xml" value="0.1" />
         <entry key="app/src/main/res/layout/list_item_checklist.xml" value="0.22" />
         <entry key="app/src/main/res/layout/list_item_checklist_item.xml" value="0.3729166666666667" />
         <entry key="app/src/main/res/layout/list_item_list.xml" value="0.19834710743801653" />

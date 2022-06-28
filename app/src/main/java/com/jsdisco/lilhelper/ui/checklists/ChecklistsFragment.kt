@@ -1,5 +1,6 @@
 package com.jsdisco.lilhelper.ui.checklists
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -12,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import com.jsdisco.lilhelper.adapter.ChecklistsAdapter
 import com.jsdisco.lilhelper.data.models.ChecklistAdapterItem
 import com.jsdisco.lilhelper.data.models.ChecklistItem
+import com.jsdisco.lilhelper.data.models.Note
 import com.jsdisco.lilhelper.databinding.FragmentChecklistsBinding
 import java.util.*
 
@@ -46,64 +48,32 @@ class ChecklistsFragment : Fragment() {
                 viewModel.buildChecklists()
                 if (viewModel.checklists.value != null){
                     adapter.submitList(viewModel.checklists.value!!)
-                    Log.e("adapter submit", "oh")
                 }
             }
         )
-/*
-        viewModel.checklists.observe(
-            viewLifecycleOwner,
-            Observer{
-                if (it != null){
-                    adapter.submitList(it)
-                }
-                Log.e("checklists observer", it.size.toString())
-            }
-        )*/
-        /*
-        viewModel.checklistItems.observe(
-            viewLifecycleOwner,
-            Observer {
-                Log.e("checklistItems observer", it.toString())
-                if (viewModel.status.value == Status.INIT){
-                    viewModel.initChecklists()
-                }
-            }
-        )
-        viewModel.status.observe(
-            viewLifecycleOwner,
-            Observer {
-                Log.e("status observer", it.toString())
-
-                when (it) {
-                    Status.INIT -> {
-                        if (viewModel.checklists.value != null){
-                            Log.e("status observer", "INIT 1")
-                            adapter.submitList(viewModel.checklists.value!!)
-                            viewModel.resetStatus()
-                        } else {
-                            Log.e("status observer", "INIT 2")
-                        }
-                    }
-                    Status.INSERTED -> {
-                        adapter.submitList(viewModel.checklists.value!!)
-                        viewModel.resetStatus()
-                    }
-                    Status.DELETED -> {
-                        if (viewModel.currIndex != null){
-                            adapter.notifyItemRemoved(viewModel.currIndex!!)
-                            viewModel.resetStatus()
-                        }
-                    }
-
-                    else -> {}
-                }
-            }
-        )*/
-
-
     }
 
-    private val deleteItems = { listId: UUID, index: Int -> viewModel.deleteChecklistItems(listId, index) }
+    private fun showDialog(listId: UUID, index: Int){
+
+        val dialog = AlertDialog.Builder(requireContext())
+            .setTitle("Diese Liste endgültig löschen?")
+            .setMultiChoiceItems(arrayOf("Nicht erneut fragen"), booleanArrayOf(false)){_, _, _ ->
+                viewModel.toggleSettings()
+            }
+            .setPositiveButton("Ok") {_, _ ->
+                viewModel.deleteChecklistItems(listId, index)
+            }
+            .setNegativeButton("Cancel") {_, _ -> }
+            .create()
+        dialog.show()
+    }
+
+    private val deleteItems = { listId: UUID, index: Int ->
+        if (viewModel.askAgainDeleteList.value == true){
+            showDialog(listId, index)
+        } else {
+            viewModel.deleteChecklistItems(listId, index)
+        }
+    }
     private val toggleCheckbox = {item: ChecklistItem -> viewModel.toggleCheckbox(item) }
 }

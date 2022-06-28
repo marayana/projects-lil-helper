@@ -52,5 +52,4 @@ class EditNoteFragment : Fragment() {
             findNavController().navigateUp()
         }
     }
-
 }

@@ -12,6 +12,8 @@ class NotesViewModel(application: Application) : AndroidViewModel(application) {
 
     val notes = repo.notes
 
+    val askAgainDeleteNote = repo.settingsAskDeleteNote
+
     fun insertNote(note: Note){
         if (note.title == ""){
             note.title = "Note Title"
@@ -34,6 +36,10 @@ class NotesViewModel(application: Application) : AndroidViewModel(application) {
         viewModelScope.launch {
             repo.deleteNote(note)
         }
+    }
+
+    fun toggleSettings(){
+        repo.toggleSetting("prefDeleteNote")
     }
 
 }

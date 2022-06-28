@@ -30,6 +30,31 @@ class AppRepository(private val database: AppDatabase) {
 
     val checklistItems: LiveData<List<ChecklistItem>> = database.appDatabaseDao.getChecklistItems()
 
+    val settingsAskDeleteNote = MutableLiveData(true)
+    val settingsAskDeleteList = MutableLiveData(true)
+
+    private lateinit var prefs: Prefs
+
+    /** SETTINGS - PUBLIC */
+
+    fun initSettings(context: Context){
+        prefs = Prefs(context)
+        settingsAskDeleteNote.value = prefs.getPref("prefDeleteNote")
+        settingsAskDeleteList.value = prefs.getPref("prefDeleteList")
+    }
+
+    fun toggleSetting(key: String){
+        if (key == "prefDeleteNote"){
+            settingsAskDeleteNote.value?.let{settingsAskDeleteNote.value = !it}
+            Log.e("AppRepo", "set askDeleteNote to: ${settingsAskDeleteNote.value}")
+            prefs.setPref(key, settingsAskDeleteNote.value ?: true)
+        }
+        if (key == "prefDeleteList"){
+            settingsAskDeleteList.value?.let{settingsAskDeleteList.value = !it}
+            Log.e("AppRepo", "set askDeleteList to: ${settingsAskDeleteNote.value}")
+            prefs.setPref(key, settingsAskDeleteList.value ?: true)
+        }
+    }
 
     /** NOTES - PUBLIC */
 
@@ -180,14 +205,17 @@ class AppRepository(private val database: AppDatabase) {
     }
 
     suspend fun getRecipesFromApi(){
-        try {
-            deleteRecipeTables()
-            val recipesFromApi = api.retrofitService.getRecipes().sortedBy{it.title}
-            recipesFromApi.forEach{ insertRecipeIntoDb(it) }
-            getRecipesFromDb()
-        } catch(e: Exception){
-            Log.e("AppRepo", "Error getting recipes from api: $e")
+        withContext(Dispatchers.IO){
+            try {
+                deleteRecipeTables()
+                val recipesFromApi = api.retrofitService.getRecipes().sortedBy{it.title}
+                recipesFromApi.forEach{ insertRecipeIntoDb(it) }
+                getRecipesFromDb()
+            } catch(e: Exception){
+                Log.e("AppRepo", "Error getting recipes from api: $e")
+            }
         }
+
     }
 
     suspend fun toggleSettingsIngCheckbox(settingsIng: SettingsIngredient){

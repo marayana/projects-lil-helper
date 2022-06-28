@@ -18,6 +18,8 @@ class ChecklistsViewModel(application: Application) : AndroidViewModel(applicati
 
     val checklistItems = repo.checklistItems
 
+    val askAgainDeleteList = repo.settingsAskDeleteList
+
     private val newItems = mutableListOf<String>()
 
     val checklists = MutableLiveData<List<ChecklistAdapterItem>>()
@@ -104,5 +106,9 @@ class ChecklistsViewModel(application: Application) : AndroidViewModel(applicati
         viewModelScope.launch {
             repo.updateChecklistItem(item)
         }
+    }
+
+    fun toggleSettings(){
+        repo.toggleSetting("prefDeleteList")
     }
 }
