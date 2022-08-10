@@ -8,15 +8,20 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-    <color name="bg_transparent_light">#88FFFFFF</color>
-    <color name="bg_transparent_dark">#88000000</color>
+    <color name="bg_card">#BBFFD5BE</color>
+    <color name="bg_chips">#E6FFFFFF</color>
+
+    <color name="bg_transparent_light">#EEFFFFFF</color>
+    <color name="bg_transparent_dark">#BB000000</color>
 
     <color name="orange_200">#FFFFCC80</color>
     <color name="orange_200_transparent">#80FFCC80</color>
     <color name="orange_400">#FFFFA726</color>
     <color name="orange_500">#FFFF9800</color>
+    <color name="orange_600">#FD890E</color>
     <color name="orange_700">#FFF57C00</color>
     <color name="orange_700_transparent">#80F57C00</color>
+    <color name="orange_800">#F57200</color>
     <color name="orange_900">#FFE65100</color>
     <color name="orange_accent">#FFFF6D00</color>
 

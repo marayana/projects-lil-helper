@@ -1,14 +1,13 @@
 package com.jsdisco.lilhelper.ui.checklists
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.jsdisco.lilhelper.data.AppRepository
 import com.jsdisco.lilhelper.data.models.ChecklistAdapterItem
-import com.jsdisco.lilhelper.data.models.ChecklistItem
+import com.jsdisco.lilhelper.data.local.models.ChecklistItem
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.*
 
@@ -25,6 +24,7 @@ class ChecklistsViewModel(application: Application) : AndroidViewModel(applicati
     val checklists = MutableLiveData<List<ChecklistAdapterItem>>()
     private val itemListsTemp = mutableListOf<ChecklistAdapterItem>()
 
+    // creates checklists (title, items) from checklistItems
     fun buildChecklists() {
 
         itemListsTemp.clear()
@@ -56,7 +56,7 @@ class ChecklistsViewModel(application: Application) : AndroidViewModel(applicati
 
     fun insertChecklistItems(listTitle: String) {
 
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             val listId = UUID.randomUUID()
             val itemsToInsert = mutableListOf<ChecklistItem>()
             for (content in newItems) {
@@ -74,7 +74,7 @@ class ChecklistsViewModel(application: Application) : AndroidViewModel(applicati
     }
 
     fun insertChecklistItemsFromRecipe(listTitle: String, items: List<String>){
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             val listId = UUID.randomUUID()
             val itemsToInsert = mutableListOf<ChecklistItem>()
             for (content in items) {
@@ -96,14 +96,14 @@ class ChecklistsViewModel(application: Application) : AndroidViewModel(applicati
         }
     }
 
-    fun deleteChecklistItems(listId: UUID, index: Int){
-        viewModelScope.launch{
+    fun deleteChecklistItems(listId: UUID){
+        viewModelScope.launch(Dispatchers.IO){
             repo.deleteChecklistItems(listId)
         }
     }
 
     fun toggleCheckbox(item: ChecklistItem){
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             repo.updateChecklistItem(item)
         }
     }

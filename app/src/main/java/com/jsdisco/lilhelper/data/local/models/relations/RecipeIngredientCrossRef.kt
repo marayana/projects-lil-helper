@@ -1,4 +1,4 @@
-package com.jsdisco.lilhelper.data.models.relations
+package com.jsdisco.lilhelper.data.local.models.relations
 
 import androidx.room.Entity
 

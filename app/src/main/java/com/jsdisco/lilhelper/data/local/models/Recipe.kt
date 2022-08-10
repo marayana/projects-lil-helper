@@ -1,4 +1,4 @@
-package com.jsdisco.lilhelper.data.models
+package com.jsdisco.lilhelper.data.local.models
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -9,6 +9,7 @@ data class Recipe(
     val r_id: String,
     val r_title: String,
     val r_instructions: String,
+    val r_img: String,
     val r_cat_warm: Boolean,
     val r_cat_cold: Boolean,
     val r_cat_salad: Boolean,

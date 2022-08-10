@@ -18,6 +18,6 @@ class Prefs(context: Context) {
     }
 
     fun getPref(key: String): Boolean {
-        return prefs.getBoolean(key, false)
+        return prefs.getBoolean(key, true)
     }
 }

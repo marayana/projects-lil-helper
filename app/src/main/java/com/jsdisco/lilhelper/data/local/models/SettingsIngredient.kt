@@ -1,4 +1,4 @@
-package com.jsdisco.lilhelper.data.models
+package com.jsdisco.lilhelper.data.local.models
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

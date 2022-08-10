@@ -1,4 +1,4 @@
-package com.jsdisco.lilhelper.data.models
+package com.jsdisco.lilhelper.data.remote.models
 
 data class IngredientRemote(
     val _id: String,

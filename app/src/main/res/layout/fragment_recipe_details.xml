@@ -5,96 +5,110 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/foodbg_pink"
-    android:paddingTop="0dp"
-    android:paddingBottom="0dp"
     tools:context=".ui.recipes.RecipeDetailsFragment">
     <ImageView
         android:id="@+id/iv_bg_food_details"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:alpha="0.8"
-        android:src="@android:drawable/screen_background_light"
+        android:background="?attr/background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/btn_recipe_details_create_list"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="32dp"
-        android:text="@string/recipe_details_create_list"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ScrollView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginTop="24dp"
-        android:background="#FFFFFF"
-        android:padding="10dp"
+        android:layout_marginBottom="16dp"
+        android:background="?attr/background"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
-            android:layout_width="match_parent"
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/btn_recipe_details_create_list"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingBottom="40dp"
-            android:orientation="vertical">
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:clickable="true"
+            android:src="@drawable/ic_add_list"
+            android:backgroundTint="?attr/colorPrimary"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:focusable="true"
+            app:tint="?attr/colorOnPrimary"/>
 
-            <TextView
-                android:id="@+id/tv_recipe_details_ings_title"
-                style="@style/custom_font"
-                android:layout_width="wrap_content"
+        <ScrollView
+            android:id="@+id/sv_recipe_details"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:padding="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/recipe_details_ings_title"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:orientation="vertical"
+                android:paddingBottom="64dp">
 
-            <TextView
-                android:id="@+id/tv_recipe_details_ings"
-                style="@style/custom_font"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_recipe_details_ings_title"
-                app:lineHeight="24dp"
-                tools:text="Test\nBlah\nAnanas" />
+                <ImageView
+                    android:id="@+id/iv_recipe_details"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/defaultimg" />
 
-            <TextView
-                android:id="@+id/tv_recipe_details_instr_title"
-                style="@style/custom_font"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:text="@string/recipe_details_instr_title"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_recipe_details_ings" />
+                <TextView
+                    android:id="@+id/tv_recipe_details_ings_title"
+                    style="@style/custom_font"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:text="@string/recipe_details_ings_title"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/tv_recipe_details_instr"
-                style="@style/custom_font"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_recipe_details_instr_title"
-                app:lineHeight="20dp"
-                tools:text="Banane schälen, essen."
-                />
-        </LinearLayout>
-    </ScrollView>
+                <TextView
+                    android:id="@+id/tv_recipe_details_ings"
+                    style="@style/custom_font"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    app:lineHeight="24dp"
+                    tools:text="Test\nBlah\nAnanas" />
 
+                <TextView
+                    android:id="@+id/tv_recipe_details_instr_title"
+                    style="@style/custom_font"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:text="@string/recipe_details_instr_title"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_recipe_details_instr"
+                    style="@style/custom_font"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="20dp"
+                    app:lineHeight="20dp"
+                    tools:text="Banane schälen, essen." />
+            </LinearLayout>
+        </ScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

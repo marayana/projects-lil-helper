@@ -64,7 +64,8 @@
                 app:layout_constraintBottom_toBottomOf="@+id/ib_item_note_delete"
                 app:layout_constraintEnd_toStartOf="@+id/ib_item_note_delete"
                 app:layout_constraintTop_toTopOf="@+id/ib_item_note_delete"
-                app:srcCompat="@drawable/ic_edit" />
+                app:srcCompat="@drawable/ic_edit"
+                app:tint="?attr/colorOnSecondary" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
 

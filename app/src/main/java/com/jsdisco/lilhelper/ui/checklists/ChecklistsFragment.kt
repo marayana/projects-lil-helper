@@ -2,18 +2,15 @@ package com.jsdisco.lilhelper.ui.checklists
 
 import android.app.AlertDialog
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import com.jsdisco.lilhelper.R
 import com.jsdisco.lilhelper.adapter.ChecklistsAdapter
-import com.jsdisco.lilhelper.data.models.ChecklistAdapterItem
-import com.jsdisco.lilhelper.data.models.ChecklistItem
-import com.jsdisco.lilhelper.data.models.Note
+import com.jsdisco.lilhelper.data.local.models.ChecklistItem
 import com.jsdisco.lilhelper.databinding.FragmentChecklistsBinding
 import java.util.*
 
@@ -35,44 +32,41 @@ class ChecklistsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val rvChecklists = binding.rvCheckLists
-        val adapter = ChecklistsAdapter(requireContext(), deleteItems, toggleCheckbox)
+        val adapter = ChecklistsAdapter(deleteItems, toggleCheckbox)
         rvChecklists.adapter = adapter
 
         binding.fabAddCheckList.setOnClickListener {
             findNavController().navigate(ChecklistsFragmentDirections.actionFragmentChecklistsToFragmentAddChecklist())
         }
 
-        viewModel.checklistItems.observe(
-            viewLifecycleOwner,
-            Observer {
-                viewModel.buildChecklists()
-                if (viewModel.checklists.value != null){
-                    adapter.submitList(viewModel.checklists.value!!)
-                }
+        viewModel.checklistItems.observe(viewLifecycleOwner) {
+            viewModel.buildChecklists()
+            if (viewModel.checklists.value != null) {
+                adapter.submitList(viewModel.checklists.value!!)
             }
-        )
+        }
     }
 
-    private fun showDialog(listId: UUID, index: Int){
+    private fun showDialog(listId: UUID){
 
         val dialog = AlertDialog.Builder(requireContext())
-            .setTitle("Diese Liste endgültig löschen?")
-            .setMultiChoiceItems(arrayOf("Nicht erneut fragen"), booleanArrayOf(false)){_, _, _ ->
+            .setTitle(getString(R.string.delete_dialog_title_checklists))
+            .setMultiChoiceItems(arrayOf(getString(R.string.delete_dialog_dont_ask_again)), booleanArrayOf(false)){_, _, _ ->
                 viewModel.toggleSettings()
             }
-            .setPositiveButton("Ok") {_, _ ->
-                viewModel.deleteChecklistItems(listId, index)
+            .setPositiveButton(getString(R.string.delete_dialog_positive_button)) {_, _ ->
+                viewModel.deleteChecklistItems(listId)
             }
-            .setNegativeButton("Cancel") {_, _ -> }
+            .setNegativeButton(getString(R.string.delete_dialog_negative_button)) {_, _ -> }
             .create()
         dialog.show()
     }
 
-    private val deleteItems = { listId: UUID, index: Int ->
+    private val deleteItems = { listId: UUID ->
         if (viewModel.askAgainDeleteList.value == true){
-            showDialog(listId, index)
+            showDialog(listId)
         } else {
-            viewModel.deleteChecklistItems(listId, index)
+            viewModel.deleteChecklistItems(listId)
         }
     }
     private val toggleCheckbox = {item: ChecklistItem -> viewModel.toggleCheckbox(item) }

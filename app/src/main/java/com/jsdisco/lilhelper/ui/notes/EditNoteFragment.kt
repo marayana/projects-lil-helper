@@ -1,15 +1,12 @@
 package com.jsdisco.lilhelper.ui.notes
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import com.jsdisco.lilhelper.data.models.Note
-import com.jsdisco.lilhelper.databinding.FragmentAddNoteBinding
 import com.jsdisco.lilhelper.databinding.FragmentEditNoteBinding
 
 class EditNoteFragment : Fragment() {

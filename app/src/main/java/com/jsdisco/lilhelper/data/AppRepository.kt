@@ -5,56 +5,55 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.jsdisco.lilhelper.data.local.AppDatabase
-import com.jsdisco.lilhelper.data.models.*
-import com.jsdisco.lilhelper.data.models.relations.RecipeIngredientCrossRef
-import com.jsdisco.lilhelper.data.models.relations.RecipeWithIngredients
+import com.jsdisco.lilhelper.data.local.models.*
+import com.jsdisco.lilhelper.data.local.models.relations.RecipeIngredientCrossRef
+import com.jsdisco.lilhelper.data.local.models.relations.RecipeWithIngredients
 import com.jsdisco.lilhelper.data.remote.RecipeApi
+import com.jsdisco.lilhelper.data.remote.models.RecipeRemote
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.util.*
 
+const val TAG = "AppRepository"
+
+/**
+ *
+ * Keeps all data used by the app:
+ *
+ * - Notes: from roomDB
+ * - Checklists: from roomDB
+ * - Recipes: from roomDB (or, if no recipes are stored, from the API)
+ * - Settings: from sharedPreferences
+ *
+ * */
 
 class AppRepository(private val database: AppDatabase) {
 
     private val api = RecipeApi
 
-    private val _recipes = MutableLiveData<List<RecipeWithIngredients>>()
-    val recipes: LiveData<List<RecipeWithIngredients>>
-        get() = _recipes
-
-    private val _settingsIngs = MutableLiveData<List<SettingsIngredient>>()
-    val settingsIngs: LiveData<List<SettingsIngredient>>
-        get() = _settingsIngs
-
+    /** NOTES */
     val notes: LiveData<List<Note>> = database.appDatabaseDao.getNotes()
 
+    /** CHECK LISTS */
     val checklistItems: LiveData<List<ChecklistItem>> = database.appDatabaseDao.getChecklistItems()
+
+    /** RECIPES */
+    private val _recipes = MutableLiveData<List<RecipeWithIngredients>>()
+    val recipes: LiveData<List<RecipeWithIngredients>> = _recipes
+
+    private val _currRecipe = MutableLiveData<RecipeWithIngredients>()
+    val currRecipe: LiveData<RecipeWithIngredients> = _currRecipe
+
+    /** SETTINGS */
+    private val _settingsIngs = MutableLiveData<List<SettingsIngredient>>()
+    val settingsIngs: LiveData<List<SettingsIngredient>> = _settingsIngs
 
     val settingsAskDeleteNote = MutableLiveData(true)
     val settingsAskDeleteList = MutableLiveData(true)
+    val settingsLoadImgs = MutableLiveData(false)
 
     private lateinit var prefs: Prefs
 
-    /** SETTINGS - PUBLIC */
-
-    fun initSettings(context: Context){
-        prefs = Prefs(context)
-        settingsAskDeleteNote.value = prefs.getPref("prefDeleteNote")
-        settingsAskDeleteList.value = prefs.getPref("prefDeleteList")
-    }
-
-    fun toggleSetting(key: String){
-        if (key == "prefDeleteNote"){
-            settingsAskDeleteNote.value?.let{settingsAskDeleteNote.value = !it}
-            Log.e("AppRepo", "set askDeleteNote to: ${settingsAskDeleteNote.value}")
-            prefs.setPref(key, settingsAskDeleteNote.value ?: true)
-        }
-        if (key == "prefDeleteList"){
-            settingsAskDeleteList.value?.let{settingsAskDeleteList.value = !it}
-            Log.e("AppRepo", "set askDeleteList to: ${settingsAskDeleteNote.value}")
-            prefs.setPref(key, settingsAskDeleteList.value ?: true)
-        }
-    }
 
     /** NOTES - PUBLIC */
 
@@ -62,7 +61,7 @@ class AppRepository(private val database: AppDatabase) {
         try {
             database.appDatabaseDao.insertNote(note)
         } catch(e: Exception){
-            Log.e("AppRepo", "Error inserting note into database: $e")
+            Log.e(TAG, "Error inserting note into database: $e")
         }
     }
 
@@ -70,7 +69,7 @@ class AppRepository(private val database: AppDatabase) {
         try {
             database.appDatabaseDao.updateNote(note)
         } catch(e: Exception){
-            Log.e("AppRepository", "Error updating note with id ${note.id}: $e")
+            Log.e(TAG, "Error updating note with id ${note.id}: $e")
         }
     }
 
@@ -78,7 +77,7 @@ class AppRepository(private val database: AppDatabase) {
         try {
             database.appDatabaseDao.deleteNoteById(note.id)
         } catch(e: Exception){
-            Log.e("AppRepository", "Error deleting note with id ${note.id}: $e")
+            Log.e(TAG, "Error deleting note with id ${note.id}: $e")
         }
     }
 
@@ -89,15 +88,7 @@ class AppRepository(private val database: AppDatabase) {
         try {
             database.appDatabaseDao.insertManyChecklistItems(items)
         } catch(e: Exception){
-            Log.e("AppRepo", "Error inserting checklistItems into database: $e")
-        }
-    }
-
-    suspend fun insertChecklistItem(item: ChecklistItem){
-        try {
-            database.appDatabaseDao.insertChecklistItem(item)
-        } catch(e: Exception){
-            Log.e("AppRepo", "Error inserting checklistItem into database: $e")
+            Log.e(TAG, "Error inserting checklistItems into database: $e")
         }
     }
 
@@ -105,7 +96,7 @@ class AppRepository(private val database: AppDatabase) {
         try{
             database.appDatabaseDao.updateChecklistItem(item)
         } catch(e: Exception){
-            Log.e("AppRepo", "Error updating checklistItem in database: $e")
+            Log.e(TAG, "Error updating checklistItem in database: $e")
         }
     }
 
@@ -113,7 +104,7 @@ class AppRepository(private val database: AppDatabase) {
         try{
             database.appDatabaseDao.deleteChecklistItems(listId)
         } catch(e: Exception){
-            Log.e("AppRepo", "Error deleting checklistItems from database: $e")
+            Log.e(TAG, "Error deleting checklistItems from database: $e")
         }
     }
 
@@ -123,10 +114,10 @@ class AppRepository(private val database: AppDatabase) {
     private suspend fun getRecipesFromDb(){
         try {
             val recipes = database.appDatabaseDao.getRecipes()
-            val recipesWithIngs = recipes.map{database.appDatabaseDao.getRecipeWithIngredients(it.r_id)[0]}
+            val recipesWithIngs = recipes.map{database.appDatabaseDao.getRecipeWithIngredients(it.r_id)}
             _recipes.postValue(recipesWithIngs)
         } catch(e: Exception){
-            Log.e("AppRepo", "Error getting recipes from db: $e")
+            Log.e(TAG, "Error getting recipes from db: $e")
         }
     }
 
@@ -136,6 +127,7 @@ class AppRepository(private val database: AppDatabase) {
                 recipeFromApi._id,
                 recipeFromApi.title,
                 recipeFromApi.instructions,
+                recipeFromApi.img,
                 recipeFromApi.recipeCategory.contains("warm"),
                 recipeFromApi.recipeCategory.contains("kalt"),
                 recipeFromApi.recipeCategory.contains("salat"),
@@ -149,7 +141,7 @@ class AppRepository(private val database: AppDatabase) {
                 database.appDatabaseDao.insertRecipeIngredientCrossRef(RecipeIngredientCrossRef(recipeFromApi._id, it._id))
             }
         } catch(e: Exception){
-            Log.e("AppRepo", "Error inserting recipe into db: $e")
+            Log.e(TAG, "Error inserting recipe into db: $e")
         }
     }
 
@@ -159,14 +151,14 @@ class AppRepository(private val database: AppDatabase) {
             database.appDatabaseDao.deleteIngredients()
             database.appDatabaseDao.deleteRecipeIngredientCrossRef()
         } catch(e: Exception){
-            Log.e("AppRepo", "Error deleting recipe tables: $e")
+            Log.e(TAG, "Error deleting recipe tables: $e")
         }
     }
 
     private suspend fun initSettingsIngredients(){
         try {
-            val hasNoIngs = database.appDatabaseDao.getSettingsIngsCount() == 0
-            if (hasNoIngs){
+            val hasNoSettingsIngs = database.appDatabaseDao.getSettingsIngsCount() == 0
+            if (hasNoSettingsIngs){
                 val excluded = listOf("Curry", "Dill", "Gemüsebrühe", "Gewürze", "Kurkuma", "Liebstöckel", "Lorbeer", "Majoran", "Mehl", "Muskat", "Olivenöl", "Oregano", "Paprika (rosenscharf)", "Pfeffer", "Pfeffer (Cayenne)", "Pfeffer (schwarz)", "Rapsöl", "Rauchsalz", "Rohrohrzucker", "Salz", "Senf", "Thymian", "Wasser", "Zucker" )
 
                 val allIngs = database.appDatabaseDao.getIngredients()
@@ -182,40 +174,63 @@ class AppRepository(private val database: AppDatabase) {
             _settingsIngs.postValue(ings)
 
         } catch(e: Exception){
-            Log.e("AppRepo", "Error getting settingsIngredients: $e")
+            Log.e(TAG, "Error getting settingsIngredients: $e")
         }
     }
-
 
     /** RECIPES AND INGREDIENTS - PUBLIC */
 
     suspend fun initRecipeDB(){
         withContext(Dispatchers.IO){
-            try {
-                if (database.appDatabaseDao.getRecipeCount() == 0){
-                    getRecipesFromApi()
-                } else {
-                    getRecipesFromDb()
-                }
-                initSettingsIngredients()
-            } catch(e: Exception){
-                Log.e("AppRepo", "Error in initRecipeDB: $e")
+            if (database.appDatabaseDao.getRecipeCount() == 0){
+                getRecipesFromApi()
+            } else {
+                getRecipesFromDb()
             }
+            initSettingsIngredients()
         }
     }
 
     suspend fun getRecipesFromApi(){
         withContext(Dispatchers.IO){
-            try {
-                deleteRecipeTables()
-                val recipesFromApi = api.retrofitService.getRecipes().sortedBy{it.title}
-                recipesFromApi.forEach{ insertRecipeIntoDb(it) }
-                getRecipesFromDb()
-            } catch(e: Exception){
-                Log.e("AppRepo", "Error getting recipes from api: $e")
-            }
+            val recipesFromApi = api.retrofitService.getRecipes().sortedBy{it.title}
+            deleteRecipeTables()
+            recipesFromApi.forEach{ insertRecipeIntoDb(it) }
+            getRecipesFromDb()
         }
+    }
 
+    suspend fun getRecipeWithIngredientsById(id: String){
+        try {
+            _currRecipe.postValue(database.appDatabaseDao.getRecipeWithIngredients(id))
+        } catch(e: Exception){
+            Log.e(TAG, "Error in getRecipeWithIngredientsById(): $e")
+        }
+    }
+
+
+    /** SETTINGS - PUBLIC */
+
+    fun initSettings(context: Context){
+        prefs = Prefs(context)
+        settingsAskDeleteNote.value = prefs.getPref("prefDeleteNote")
+        settingsAskDeleteList.value = prefs.getPref("prefDeleteList")
+        settingsLoadImgs.value = prefs.getPref("prefLoadImgs")
+    }
+
+    fun toggleSetting(key: String){
+        if (key == "prefDeleteNote"){
+            settingsAskDeleteNote.value?.let{settingsAskDeleteNote.value = !it}
+            prefs.setPref(key, settingsAskDeleteNote.value ?: true)
+        }
+        if (key == "prefDeleteList"){
+            settingsAskDeleteList.value?.let{settingsAskDeleteList.value = !it}
+            prefs.setPref(key, settingsAskDeleteList.value ?: true)
+        }
+        if (key == "prefLoadImgs"){
+            settingsLoadImgs.value?.let{settingsLoadImgs.value = !it}
+            prefs.setPref(key, settingsLoadImgs.value ?: false)
+        }
     }
 
     suspend fun toggleSettingsIngCheckbox(settingsIng: SettingsIngredient){
@@ -223,7 +238,7 @@ class AppRepository(private val database: AppDatabase) {
             settingsIng.si_included = !settingsIng.si_included
             database.appDatabaseDao.updateSettingsIng(settingsIng)
         } catch(e: Exception){
-            Log.e("AppRepo", "Error in toggleSettingsIngCheckbox: $e")
+            Log.e(TAG, "Error in toggleSettingsIngCheckbox(): $e")
         }
     }
 

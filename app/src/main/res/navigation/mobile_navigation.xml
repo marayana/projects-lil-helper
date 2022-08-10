@@ -9,14 +9,14 @@
     <fragment
         android:id="@+id/fragmentHome"
         android:name="com.jsdisco.lilhelper.ui.home.HomeFragment"
-        android:label="@string/bottomnav_home"
+        android:label="@string/actionbar_home"
         tools:layout="@layout/fragment_home" />
 
     <!-- SETTINGS -->
     <fragment
         android:id="@+id/fragmentSettings"
         android:name="com.jsdisco.lilhelper.ui.settings.SettingsFragment"
-        android:label="@string/bottomnav_settings"
+        android:label="@string/actionbar_settings"
         tools:layout="@layout/fragment_settings" />
 
     <!-- NOTES -->
@@ -26,7 +26,7 @@
         <fragment
             android:id="@+id/fragmentNotes"
             android:name="com.jsdisco.lilhelper.ui.notes.NotesFragment"
-            android:label="@string/bottomnav_notes"
+            android:label="@string/actionbar_notes"
             tools:layout="@layout/fragment_notes">
             <action
                 android:id="@+id/action_fragmentNotes_to_fragmentAddNote"
@@ -58,7 +58,7 @@
         <fragment
             android:id="@+id/fragmentChecklists"
             android:name="com.jsdisco.lilhelper.ui.checklists.ChecklistsFragment"
-            android:label="@string/bottomnav_lists"
+            android:label="@string/actionbar_lists"
             tools:layout="@layout/fragment_checklists">
             <action
                 android:id="@+id/action_fragmentChecklists_to_fragmentAddChecklist"
@@ -67,7 +67,7 @@
         <fragment
             android:id="@+id/fragmentAddChecklist"
             android:name="com.jsdisco.lilhelper.ui.checklists.AddChecklistFragment"
-            android:label="@string/bottomnav_lists"
+            android:label="@string/actionbar_add_list"
             tools:layout="@layout/fragment_add_checklist" />
     </navigation>
 
@@ -78,7 +78,7 @@
         <fragment
             android:id="@+id/fragmentRecipes"
             android:name="com.jsdisco.lilhelper.ui.recipes.RecipesFragment"
-            android:label="@string/bottomnav_recipes"
+            android:label="@string/actionbar_recipes"
             tools:layout="@layout/fragment_recipes">
             <action
                 android:id="@+id/action_fragmentRecipes_to_fragmentRecipeDetails"
@@ -93,14 +93,11 @@
                 android:name="recipeTitle"
                 app:argType="string" />
             <argument
-                android:name="recipeIndex"
-                app:argType="integer" />
+                android:name="recipeId"
+                app:argType="string" />
         </fragment>
         <action
             android:id="@+id/action_global_nav_nested_checklists"
             app:destination="@id/nav_nested_checklists" />
     </navigation>
-
-
-
 </navigation>

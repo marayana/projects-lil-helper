@@ -1,21 +1,15 @@
 package com.jsdisco.lilhelper.ui.settings
 
-import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.datastore.preferences.preferencesDataStore
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import com.jsdisco.lilhelper.adapter.SettingsAdapter
-import com.jsdisco.lilhelper.data.models.SettingsIngredient
+import com.jsdisco.lilhelper.data.local.models.SettingsIngredient
 import com.jsdisco.lilhelper.databinding.FragmentSettingsBinding
-//import com.jsdisco.lilhelper.ui.settings.SettingsViewModel.Factory
 
-val Context.dataStore by preferencesDataStore(name = "settings")
 
 class SettingsFragment : Fragment() {
 
@@ -27,7 +21,6 @@ class SettingsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
         binding = FragmentSettingsBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -39,27 +32,32 @@ class SettingsFragment : Fragment() {
         val adapter = SettingsAdapter(emptyList(), onIngCheckBoxClick)
         rvSettings.adapter = adapter
 
-        viewModel.settingsIngs.observe(
-            viewLifecycleOwner,
-            Observer{
-                adapter.submitList(it)
-            }
-        )
+        viewModel.settingsIngs.observe(viewLifecycleOwner) {
+            adapter.submitList(it)
+        }
 
-        Log.e("SettingsFragment", (viewModel.settingsAskDeleteNote.value == true).toString())
+        viewModel.settingsAskDeleteNote.observe(viewLifecycleOwner) {
+            binding.switchSettingsNotes.isChecked = it
+        }
+        viewModel.settingsAskDeleteList.observe(viewLifecycleOwner) {
+            binding.switchSettingsLists.isChecked = it
+        }
+        viewModel.settingsLoadImgs.observe(viewLifecycleOwner) {
+            binding.switchSettingsImgs.isChecked = it
+        }
 
-        binding.switchSettingsNotes.isChecked = viewModel.settingsAskDeleteNote.value == true
-        binding.switchSettingsLists.isChecked = viewModel.settingsAskDeleteList.value == true
-
-        binding.switchSettingsNotes.setOnClickListener{
+        binding.switchSettingsNotes.setOnClickListener {
             viewModel.toggleSettingsSwitch("prefDeleteNote")
         }
         binding.switchSettingsLists.setOnClickListener {
             viewModel.toggleSettingsSwitch("prefDeleteList")
         }
+        binding.switchSettingsImgs.setOnClickListener {
+            viewModel.toggleSettingsSwitch("prefLoadImgs")
+        }
     }
 
-    private val onIngCheckBoxClick = {setting: SettingsIngredient ->
+    private val onIngCheckBoxClick = { setting: SettingsIngredient ->
         viewModel.toggleIngCheckbox(setting)
     }
 }

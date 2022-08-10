@@ -5,17 +5,21 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
+import androidx.core.net.toUri
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import com.jsdisco.lilhelper.R
-import com.jsdisco.lilhelper.data.models.Recipe
-import com.jsdisco.lilhelper.data.models.RecipeRemote
-import com.jsdisco.lilhelper.data.models.relations.RecipeWithIngredients
+import com.jsdisco.lilhelper.data.local.models.relations.RecipeWithIngredients
+import com.jsdisco.lilhelper.data.remote.APITOKEN
+import com.jsdisco.lilhelper.data.remote.BASE_URL
 
 class RecipesAdapter(
-    private var dataset: List<RecipeWithIngredients>
+    private var dataset: List<RecipeWithIngredients>,
+    private val loadImgs: Boolean
 ) : RecyclerView.Adapter<RecipesAdapter.ItemViewHolder>() {
 
     @SuppressLint("NotifyDataSetChanged")
@@ -24,10 +28,10 @@ class RecipesAdapter(
         notifyDataSetChanged()
     }
 
-
     class ItemViewHolder(view: View) : RecyclerView.ViewHolder(view){
-        val tvRecipeTitle: TextView = view.findViewById(R.id.tv_item_recipe_title)
         val cvRecipe: CardView = view.findViewById(R.id.cv_item_recipe)
+        val tvRecipeTitle: TextView = view.findViewById(R.id.tv_item_recipe_title)
+        val ivRecipe: ImageView = view.findViewById(R.id.iv_item_recipe_img)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
@@ -40,12 +44,24 @@ class RecipesAdapter(
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         val recipe = dataset[position]
 
-        holder.tvRecipeTitle.text = recipe.recipe.r_title
+        holder.tvRecipeTitle.text = recipe.recipe.r_title.replace("-", "\u00AD-")
+
+        if (loadImgs){
+            val imgUrl = "${BASE_URL}img/${recipe.recipe.r_img}.jpg"
+            val imgUri = imgUrl.toUri().buildUpon().scheme("https").build()
+
+
+            holder.ivRecipe.load(imgUri){
+                addHeader("Authorization", "Bearer $APITOKEN")
+                error(R.drawable.defaultimg)
+            }
+        }
+
 
         holder.cvRecipe.setOnClickListener {
             val bundle = Bundle()
-            bundle.putInt("recipeIndex", position)
             bundle.putString("recipeTitle", recipe.recipe.r_title)
+            bundle.putString("recipeId", recipe.recipe.r_id)
             holder.itemView.findNavController().navigate(R.id.action_fragmentRecipes_to_fragmentRecipeDetails, bundle)
         }
     }

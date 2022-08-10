@@ -1,18 +1,19 @@
 package com.jsdisco.lilhelper.ui.recipes
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Transformations.map
 import androidx.navigation.fragment.findNavController
-import com.jsdisco.lilhelper.data.models.Note
+import coil.load
+import com.jsdisco.lilhelper.R
+import com.jsdisco.lilhelper.data.remote.BASE_URL
+import com.jsdisco.lilhelper.data.remote.APITOKEN
 import com.jsdisco.lilhelper.databinding.FragmentRecipeDetailsBinding
 import com.jsdisco.lilhelper.ui.checklists.ChecklistsViewModel
-import com.jsdisco.lilhelper.ui.notes.NotesViewModel
 
 class RecipeDetailsFragment : Fragment() {
 
@@ -21,7 +22,7 @@ class RecipeDetailsFragment : Fragment() {
     private lateinit var binding: FragmentRecipeDetailsBinding
 
     private var recipeTitle: String = ""
-    private var recipeIndex: Int = 0
+    private var recipeId: String = ""
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -30,8 +31,8 @@ class RecipeDetailsFragment : Fragment() {
     ): View {
 
         arguments?.let {
-            recipeIndex = it.getInt("recipeIndex")
             recipeTitle = it.getString("recipeTitle").toString()
+            recipeId = it.getString("recipeId").toString()
         }
 
         binding = FragmentRecipeDetailsBinding.inflate(inflater, container, false)
@@ -41,27 +42,47 @@ class RecipeDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val recipe = viewModel.recipes.value?.get(recipeIndex)
+        viewModel.getRecipeWithIngredientsById(recipeId)
+        viewModel.currRecipe.observe(viewLifecycleOwner) { recipe ->
+            if (recipe != null) {
+                val ingStr =
+                    recipe.ingredients.joinToString(separator = "\n") { "${it.i_name} ${it.i_amount} ${it.i_unit} " }
+                binding.tvRecipeDetailsIngs.text = ingStr
 
-        if (recipe != null){
-            val ingStr = recipe.ingredients.joinToString(separator = "\n") {"${it.i_name} ${it.i_amount} ${it.i_unit} "}
-            binding.tvRecipeDetailsIngs.text = ingStr
+                binding.tvRecipeDetailsInstr.text = recipe.recipe.r_instructions
 
-            binding.tvRecipeDetailsInstr.text = recipe.recipe.r_instructions
-
-            binding.btnRecipeDetailsCreateList.setOnClickListener {
-                val excludedIngs = viewModel.settingsIngs.value?.filter { !it.si_included }?.map { it.si_name }
-
-                val ingItems = if (excludedIngs != null){
-                    val filtered = recipe.ingredients.filter{!excludedIngs.contains(it.i_name)}
-                    filtered.map{"${it.i_name} ${it.i_amount} ${it.i_unit} "}
+                // recipe images
+                if (viewModel.loadImgs.value == true){
+                    val imgUrl = "${BASE_URL}img/${recipe.recipe.r_img}.jpg"
+                    val imgUri = imgUrl.toUri().buildUpon().scheme("https").build()
+                    binding.ivRecipeDetails.load(imgUri){
+                        addHeader("Authorization", "Bearer $APITOKEN")
+                        error(R.drawable.defaultimg)
+                    }
                 } else {
-                    recipe.ingredients.map{"${it.i_name} ${it.i_amount} ${it.i_unit} "}
+                    binding.ivRecipeDetails.setImageResource(R.drawable.defaultimg)
                 }
 
-                checklistsViewModel.insertChecklistItemsFromRecipe(recipe.recipe.r_title, ingItems)
+                // creating a checklist from recipe ingredients
+                binding.btnRecipeDetailsCreateList.setOnClickListener {
+                    val excludedIngs =
+                        viewModel.settingsIngs.value?.filter { !it.si_included }?.map { it.si_name }
 
-                findNavController().navigate(RecipeDetailsFragmentDirections.actionGlobalNavNestedChecklists())
+                    val ingItems = if (excludedIngs != null) {
+                        val filtered =
+                            recipe.ingredients.filter { !excludedIngs.contains(it.i_name) }
+                        filtered.map { "${it.i_name} ${it.i_amount} ${it.i_unit} " }
+                    } else {
+                        recipe.ingredients.map { "${it.i_name} ${it.i_amount} ${it.i_unit} " }
+                    }
+
+                    checklistsViewModel.insertChecklistItemsFromRecipe(
+                        recipe.recipe.r_title,
+                        ingItems
+                    )
+
+                    findNavController().navigate(RecipeDetailsFragmentDirections.actionGlobalNavNestedChecklists())
+                }
             }
         }
     }

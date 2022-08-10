@@ -1,13 +1,12 @@
 package com.jsdisco.lilhelper.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
 import androidx.recyclerview.widget.RecyclerView
 import com.jsdisco.lilhelper.R
-import com.jsdisco.lilhelper.data.models.ChecklistItem
+import com.jsdisco.lilhelper.data.local.models.ChecklistItem
 
 class ChecklistsListsAdapter(
     private val dataset: ArrayList<ChecklistItem>,

@@ -2,9 +2,9 @@ package com.jsdisco.lilhelper.data.local
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.jsdisco.lilhelper.data.models.*
-import com.jsdisco.lilhelper.data.models.relations.RecipeIngredientCrossRef
-import com.jsdisco.lilhelper.data.models.relations.RecipeWithIngredients
+import com.jsdisco.lilhelper.data.local.models.*
+import com.jsdisco.lilhelper.data.local.models.relations.RecipeIngredientCrossRef
+import com.jsdisco.lilhelper.data.local.models.relations.RecipeWithIngredients
 import java.util.*
 
 @Dao
@@ -25,7 +25,7 @@ interface AppDatabaseDao {
 
     @Transaction
     @Query("SELECT * FROM Recipe WHERE r_id = :id")
-    suspend fun getRecipeWithIngredients(id: String) : List<RecipeWithIngredients>
+    suspend fun getRecipeWithIngredients(id: String) : RecipeWithIngredients
 
     @Query("SELECT * FROM Recipe")
     fun getRecipes() : List<Recipe>

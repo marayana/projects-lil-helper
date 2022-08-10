@@ -7,13 +7,8 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.jsdisco.lilhelper.databinding.FragmentAddChecklistBinding
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-
 
 class AddChecklistFragment : Fragment() {
 
@@ -42,16 +37,9 @@ class AddChecklistFragment : Fragment() {
         }
 
         binding.btnAddchecklistSave.setOnClickListener {
-            lifecycleScope.launch {
-                withContext(Dispatchers.IO){
-                    val newTitle = binding.etAddchecklistTitle.text.toString()
-
-                    viewModel.insertChecklistItems(newTitle)
-                    withContext(Dispatchers.Main){
-                        findNavController().navigateUp()
-                    }
-                }
-            }
+            val newTitle = binding.etAddchecklistTitle.text.toString()
+            viewModel.insertChecklistItems(newTitle)
+            findNavController().navigateUp()
         }
     }
 }

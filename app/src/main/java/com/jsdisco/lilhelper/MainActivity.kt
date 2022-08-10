@@ -1,20 +1,10 @@
 package com.jsdisco.lilhelper
 
-import android.os.Build
 import android.os.Bundle
-import android.os.PersistableBundle
-import android.util.Log
-import android.view.Menu
-import android.view.MenuItem
-import android.view.WindowManager
-import android.widget.Toast
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
@@ -37,13 +27,12 @@ class MainActivity : AppCompatActivity() {
         // custom toolbar (NoActionBar)
         setSupportActionBar(binding.toolbar)
 
+        // bottom navigation
+        val bottomNav: BottomNavigationView = binding.bottomNav
 
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
-
-        // bottom navigation
-        val bottomNav: BottomNavigationView = binding.bottomNav
 
         val appBarConfiguration = AppBarConfiguration(
             setOf(
@@ -57,6 +46,7 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         bottomNav.setupWithNavController(navController)
 
+        // on navigation, pop the back stack up to start screen of sub-nav-tree
         bottomNav.setOnItemSelectedListener { item ->
 
             NavigationUI.onNavDestinationSelected(item, navController)
@@ -69,18 +59,17 @@ class MainActivity : AppCompatActivity() {
 
             return@setOnItemSelectedListener true
         }
+
+        //binding.
     }
 
+    // back button in toolbar
     override fun onSupportNavigateUp(): Boolean {
         return navController.navigateUp() || super.onSupportNavigateUp()
     }
 }
 
 /*
-*
-*  TODO: how to check for prefs already saved?
-*  TODO: check for API call fail on app load
-*  TODO: styles (dark mode)
-*  TODO: Home Screen
-*  TODO: cleanup
+*   TODO: cleanup
+*   TODO: comments
 *  */

@@ -15,7 +15,6 @@ class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
     private val viewModel: HomeViewModel by viewModels()
 
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -34,23 +33,21 @@ class HomeFragment : Fragment() {
                 when(it){
                     Status.LOADING -> {
                         binding.pbHome.visibility = View.VISIBLE
+                        binding.ivHomeCloudError.visibility = View.GONE
+                        binding.tvHomeTitle.visibility = View.GONE
                     }
                     Status.ERROR -> {
                         binding.pbHome.visibility = View.GONE
-                        //binding.ivRecipesCloudOff.visibility = View.VISIBLE
+                        binding.ivHomeCloudError.visibility = View.VISIBLE
+                        binding.tvHomeTitle.visibility = View.GONE
                     }
                     else -> {
                         binding.pbHome.visibility = View.GONE
+                        binding.ivHomeCloudError.visibility = View.GONE
                         binding.tvHomeTitle.visibility = View.VISIBLE
-                        //binding.ivRecipesCloudOff.visibility = View.GONE
                     }
                 }
             }
         )
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        //_binding = null
     }
 }

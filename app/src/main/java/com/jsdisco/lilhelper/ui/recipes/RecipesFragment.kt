@@ -1,21 +1,14 @@
 package com.jsdisco.lilhelper.ui.recipes
 
+import android.app.AlertDialog
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.children
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
-import com.google.android.material.chip.Chip
-import com.jsdisco.lilhelper.R
 import com.jsdisco.lilhelper.adapter.RecipesAdapter
 import com.jsdisco.lilhelper.databinding.FragmentRecipesBinding
-
-const val TAG = "RecipesFragment"
 
 class RecipesFragment : Fragment() {
 
@@ -34,20 +27,25 @@ class RecipesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val loadImgs = viewModel.loadImgs.value ?: false
+
         val rvRecipes = binding.rvRecipes
-        val adapter = RecipesAdapter(emptyList())
+        val adapter = RecipesAdapter(emptyList(), loadImgs)
         rvRecipes.adapter = adapter
 
         binding.ibRecipesDownload.setOnClickListener {
             viewModel.downloadRecipesFromApi()
         }
 
+
         binding.cgCategories.setOnCheckedStateChangeListener { _, checkedIds ->
 
+            // if no chip is checked, chip "all" is automatically checked
             val checked = if (checkedIds.isEmpty()){
                 binding.chipCatAll.isChecked = true
                 "all"
             } else {
+                // checkedIds is always a list with one item (radio button behaviour)
                 when(checkedIds[0]){
                     binding.chipCatWarm.id -> "warm"
                     binding.chipCatCold.id -> "cold"
@@ -63,28 +61,38 @@ class RecipesFragment : Fragment() {
             }
         }
 
-        viewModel.recipes.observe(
-            viewLifecycleOwner,
-            Observer {
-                adapter.submitList(it)
-            }
-        )
+        viewModel.recipes.observe(viewLifecycleOwner){
 
-        viewModel.loading.observe(
-            viewLifecycleOwner,
-            Observer {
-                when(it){
-                    ApiStatus.LOADING -> binding.pbRecipes.visibility = View.VISIBLE
-                    ApiStatus.ERROR -> {
-                        binding.pbRecipes.visibility = View.GONE
-                        binding.ivRecipesCloudOff.visibility = View.VISIBLE
-                    }
-                    else -> {
-                        binding.pbRecipes.visibility = View.GONE
-                        binding.ivRecipesCloudOff.visibility = View.GONE
-                    }
+            adapter.submitList(it)
+
+            // "misusing" observer to reset chips when leaving/re-entering screen, because this fires once when view is created
+            // (resetting outside of observer doesn't work)
+            binding.chipCatAll.isChecked = true
+            binding.chipCatSalad.isChecked = false
+        }
+
+        viewModel.loading.observe(viewLifecycleOwner) {
+
+            when (it) {
+                ApiStatus.LOADING -> binding.pbRecipes.visibility = View.VISIBLE
+                ApiStatus.ERROR -> {
+                    binding.pbRecipes.visibility = View.GONE
+                    showDialog()
+                    viewModel.resetLoadingStatus()
+                }
+                else -> {
+                    binding.pbRecipes.visibility = View.GONE
                 }
             }
-        )
+        }
+    }
+
+    private fun showDialog(){
+        val dialog = AlertDialog.Builder(requireContext())
+            .setTitle("Error")
+            .setMessage("Beim Download der Rezepte ist ein Fehler aufgetreten, bitte später erneut versuchen.")
+            .setPositiveButton("Ok") {_, _ -> }
+            .create()
+        dialog.show()
     }
 }

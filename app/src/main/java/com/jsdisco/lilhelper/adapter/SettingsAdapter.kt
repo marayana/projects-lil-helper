@@ -1,17 +1,13 @@
 package com.jsdisco.lilhelper.adapter
 
 import android.annotation.SuppressLint
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
-import android.widget.CompoundButton
 import androidx.recyclerview.widget.RecyclerView
 import com.jsdisco.lilhelper.R
-import com.jsdisco.lilhelper.data.models.Ingredient
-import com.jsdisco.lilhelper.data.models.Note
-import com.jsdisco.lilhelper.data.models.SettingsIngredient
+import com.jsdisco.lilhelper.data.local.models.SettingsIngredient
 
 class SettingsAdapter(
     private var dataset: List<SettingsIngredient>,

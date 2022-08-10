@@ -1,6 +1,6 @@
 package com.jsdisco.lilhelper.data.remote
 
-import com.jsdisco.lilhelper.data.models.RecipeRemote
+import com.jsdisco.lilhelper.data.remote.models.RecipeRemote
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import okhttp3.OkHttpClient
@@ -12,11 +12,11 @@ import retrofit2.http.GET
 
 const val BASE_URL = "https://recipes.jsdisco.dev/"
 
-const val TOKEN = Token.TOKEN
-//const val TOKEN = ExampleToken.TOKEN
+const val APITOKEN = Token.TOKEN
+//const val APITOKEN = ExampleToken.TOKEN
 
 private val client: OkHttpClient = OkHttpClient.Builder().addInterceptor { chain ->
-    val newRequest: Request = chain.request().newBuilder().addHeader("Authorization", "Bearer $TOKEN").build()
+    val newRequest: Request = chain.request().newBuilder().addHeader("Authorization", "Bearer $APITOKEN").build()
     chain.proceed(newRequest)
 }.build()
 

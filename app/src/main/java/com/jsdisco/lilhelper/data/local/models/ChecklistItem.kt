@@ -1,4 +1,4 @@
-package com.jsdisco.lilhelper.data.models
+package com.jsdisco.lilhelper.data.local.models
 
 import android.os.Parcelable
 import androidx.room.Entity
