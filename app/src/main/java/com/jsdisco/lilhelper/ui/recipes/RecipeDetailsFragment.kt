@@ -10,15 +10,17 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import coil.load
 import com.jsdisco.lilhelper.R
+import com.jsdisco.lilhelper.data.local.models.Note
 import com.jsdisco.lilhelper.data.remote.BASE_URL
 import com.jsdisco.lilhelper.data.remote.APITOKEN
 import com.jsdisco.lilhelper.databinding.FragmentRecipeDetailsBinding
-import com.jsdisco.lilhelper.ui.checklists.ChecklistsViewModel
+import com.jsdisco.lilhelper.ui.notes.NotesViewModel
+
 
 class RecipeDetailsFragment : Fragment() {
 
     private val viewModel: RecipesViewModel by activityViewModels()
-    private val checklistsViewModel: ChecklistsViewModel by activityViewModels()
+    private val notesViewModel: NotesViewModel by activityViewModels()
     private lateinit var binding: FragmentRecipeDetailsBinding
 
     private var recipeTitle: String = ""
@@ -62,28 +64,13 @@ class RecipeDetailsFragment : Fragment() {
                 } else {
                     binding.ivRecipeDetails.setImageResource(R.drawable.defaultimg)
                 }
-
-                // creating a checklist from recipe ingredients
-                binding.btnRecipeDetailsCreateList.setOnClickListener {
-                    val excludedIngs =
-                        viewModel.settingsIngs.value?.filter { !it.si_included }?.map { it.si_name }
-
-                    val ingItems = if (excludedIngs != null) {
-                        val filtered =
-                            recipe.ingredients.filter { !excludedIngs.contains(it.i_name) }
-                        filtered.map { "${it.i_name} ${it.i_amount} ${it.i_unit} " }
-                    } else {
-                        recipe.ingredients.map { "${it.i_name} ${it.i_amount} ${it.i_unit} " }
-                    }
-
-                    checklistsViewModel.insertChecklistItemsFromRecipe(
-                        recipe.recipe.r_title,
-                        ingItems
-                    )
-
-                    findNavController().navigate(RecipeDetailsFragmentDirections.actionGlobalNavNestedChecklists())
-                }
             }
+        }
+
+        // creating a note from recipe ingredients
+        binding.btnRecipeDetailsCreateList.setOnClickListener {
+            viewModel.createNoteFromRecipe()
+            findNavController().navigate(RecipeDetailsFragmentDirections.actionGlobalNavNestedNotes())
         }
     }
 }

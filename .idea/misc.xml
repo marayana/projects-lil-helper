@@ -11,13 +11,16 @@
         <entry key="app/src/main/res/drawable/ic_delete.xml" value="0.174" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.2435" />
         <entry key="app/src/main/res/drawable/lil_helper_icon.xml" value="0.1845" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.22" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="app/src/main/res/layout/drawer_settings.xml" value="0.3494791666666667" />
         <entry key="app/src/main/res/layout/fragment_add_check_list.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_add_checklist.xml" value="0.3388888888888889" />
+        <entry key="app/src/main/res/layout/fragment_add_drawing.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_add_note.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_check_lists.xml" value="0.22" />
         <entry key="app/src/main/res/layout/fragment_checklists.xml" value="0.3546875" />
+        <entry key="app/src/main/res/layout/fragment_drawing_details.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_drawings.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_edit_note.xml" value="0.24322916666666666" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_lists.xml" value="0.3380208333333333" />
@@ -27,6 +30,7 @@
         <entry key="app/src/main/res/layout/fragment_settings.xml" value="0.25" />
         <entry key="app/src/main/res/layout/list_item_checklist.xml" value="0.22" />
         <entry key="app/src/main/res/layout/list_item_checklist_item.xml" value="0.3729166666666667" />
+        <entry key="app/src/main/res/layout/list_item_drawing.xml" value="0.29907407407407405" />
         <entry key="app/src/main/res/layout/list_item_list.xml" value="0.19834710743801653" />
         <entry key="app/src/main/res/layout/list_item_note.xml" value="0.1" />
         <entry key="app/src/main/res/layout/list_item_recipe.xml" value="0.75" />

@@ -12,9 +12,9 @@
         android:title="@string/bottomnav_notes"/>
 
     <item
-        android:id="@+id/nav_nested_checklists"
-        android:icon="@drawable/ic_lists"
-        android:title="@string/bottomnav_lists" />
+        android:id="@+id/nav_nested_drawings"
+        android:icon="@drawable/ic_draw"
+        android:title="@string/bottomnav_drawings" />
 
     <item
         android:id="@+id/nav_nested_recipes"

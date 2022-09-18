@@ -4,7 +4,7 @@
     <!-- Bottom Nav -->
     <string name="bottomnav_home">Home</string>
     <string name="bottomnav_notes">Notizen</string>
-    <string name="bottomnav_lists">Listen</string>
+    <string name="bottomnav_drawings">Zeichnungen</string>
     <string name="bottomnav_recipes">Rezepte</string>
     <string name="bottomnav_settings">Settings</string>
 
@@ -13,8 +13,9 @@
     <string name="actionbar_notes">Notizen</string>
     <string name="actionbar_add_note">Notiz hinzufügen</string>
     <string name="actionbar_edit_note">Notiz bearbeiten</string>
-    <string name="actionbar_lists">Listen</string>
-    <string name="actionbar_add_list">Liste hinzufügen</string>
+    <string name="actionbar_drawings">Zeichnungen</string>
+    <string name="actionbar_add_drawing">Zeichnung hinzufügen</string>
+    <string name="actionbar_drawing_details">{drawingTitle}</string>
     <string name="actionbar_recipes">Rezepte</string>
     <string name="actionbar_recipe_details">{recipeTitle}</string>
     <string name="actionbar_settings">Einstellungen</string>
@@ -27,12 +28,10 @@
     <string name="editnote_save">Notiz speichern</string>
     <string name="fab_add_note_content_desc">neue Notiz</string>
 
-    <!-- CheckLists -->
-    <string name="addchecklist_hint_checklist_title">Titel</string>
-    <string name="addchecklist_hint_checklist_item">Listenpunkt</string>
-    <string name="addchecklist_save">Checkliste speichern</string>
-    <string name="editchecklist_save">Checkliste speichern</string>
-    <string name="fab_add_checkList_content_desc">neue Liste</string>
+    <!-- Drawings -->
+    <string name="adddrawing_save">Zeichnung speichern</string>
+
+    <string name="fab_add_drawing_content_desc">neue Zeichnung</string>
 
     <!-- Recipes -->
     <string name="recipes_title">Rezepte</string>
@@ -52,13 +51,13 @@
     <!-- Settings -->
     <string name="settings_title">Settings</string>
     <string name="settings_label_notes">Erneut fragen, bevor eine Notiz gelöscht wird</string>
-    <string name="settings_label_lists">Erneut fragen, bevor eine Liste gelöscht wird</string>
+    <string name="settings_label_drawings">Erneut fragen, bevor eine Zeichnung gelöscht wird</string>
     <string name="settings_label_imgs">Rezeptebilder aus dem Internet laden</string>
     <string name="settings_ings_title">Zutaten, die in aus Rezepten erstellten Listen erscheinen:</string>
 
     <!-- Delete Dialogs -->
     <string name="delete_dialog_title_notes">Diese Notiz endgültig löschen?</string>
-    <string name="delete_dialog_title_checklists">Diese Liste endgültig löschen?</string>
+    <string name="delete_dialog_title_drawings">Diese Zeichnung endgültig löschen?</string>
     <string name="delete_dialog_dont_ask_again">Nicht erneut fragen</string>
     <string name="delete_dialog_positive_button">OK</string>
     <string name="delete_dialog_negative_button">Abbrechen</string>

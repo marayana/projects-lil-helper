@@ -52,23 +52,38 @@
     </navigation>
 
 
-    <!-- CHECKLISTS -->
-    <navigation android:id="@+id/nav_nested_checklists"
-        app:startDestination="@id/fragmentChecklists">
+    <!-- DRAWINGS -->
+    <navigation android:id="@+id/nav_nested_drawings"
+        app:startDestination="@id/fragmentDrawings">
         <fragment
-            android:id="@+id/fragmentChecklists"
-            android:name="com.jsdisco.lilhelper.ui.checklists.ChecklistsFragment"
-            android:label="@string/actionbar_lists"
-            tools:layout="@layout/fragment_checklists">
+            android:id="@+id/fragmentDrawings"
+            android:name="com.jsdisco.lilhelper.ui.drawings.DrawingsFragment"
+            android:label="@string/actionbar_drawings">
             <action
-                android:id="@+id/action_fragmentChecklists_to_fragmentAddChecklist"
-                app:destination="@id/fragmentAddChecklist" />
+                android:id="@+id/action_drawingsFragment_to_addDrawingFragment"
+                app:destination="@id/fragmentAddDrawing" />
+            <action
+                android:id="@+id/action_drawingsFragment_to_drawingDetails"
+                app:destination="@id/fragmentDrawingDetails" />
         </fragment>
         <fragment
-            android:id="@+id/fragmentAddChecklist"
-            android:name="com.jsdisco.lilhelper.ui.checklists.AddChecklistFragment"
-            android:label="@string/actionbar_add_list"
-            tools:layout="@layout/fragment_add_checklist" />
+            android:id="@+id/fragmentAddDrawing"
+            android:name="com.jsdisco.lilhelper.ui.drawings.AddDrawingFragment"
+            android:label="@string/actionbar_add_drawing" />
+        <fragment
+            android:id="@+id/fragmentDrawingDetails"
+            android:name="com.jsdisco.lilhelper.ui.drawings.DrawingDetailsFragment"
+            android:label="@string/actionbar_drawing_details" >
+            <argument
+                android:name="drawingId"
+                app:argType="long" />
+            <argument
+                android:name="drawingPath"
+                app:argType="string" />
+            <argument
+                android:name="drawingTitle"
+                app:argType="string" />
+        </fragment>
     </navigation>
 
     <!-- RECIPES -->
@@ -97,7 +112,8 @@
                 app:argType="string" />
         </fragment>
         <action
-            android:id="@+id/action_global_nav_nested_checklists"
-            app:destination="@id/nav_nested_checklists" />
+            android:id="@+id/action_global_nav_nested_notes"
+            app:destination="@id/nav_nested_notes" />
     </navigation>
+
 </navigation>

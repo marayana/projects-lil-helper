@@ -50,7 +50,6 @@ class NotesAdapter(
 
         holder.ibNoteDelete.setOnClickListener {
             deleteNote(note)
-            //val dialog = DeleteDialog()
         }
     }
 

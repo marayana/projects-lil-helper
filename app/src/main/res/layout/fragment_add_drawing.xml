@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <ImageButton
+            android:id="@+id/ib_drawing_black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="16dp"
+            android:backgroundTint="#00FFFFFF"
+            app:tint="#202020"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_circle" />
+        <ImageButton
+            android:id="@+id/ib_drawing_white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:backgroundTint="#00FFFFFF"
+            app:tint="#eeeeee"
+            app:layout_constraintStart_toEndOf="@+id/ib_drawing_black"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_circle" />
+        <ImageButton
+            android:id="@+id/ib_drawing_red"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:backgroundTint="#00FFFFFF"
+            app:tint="#E81A32"
+            app:layout_constraintStart_toEndOf="@+id/ib_drawing_white"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_circle" />
+        <ImageButton
+            android:id="@+id/ib_drawing_green"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:backgroundTint="#00FFFFFF"
+            app:tint="#4F9806"
+            app:layout_constraintStart_toEndOf="@+id/ib_drawing_red"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_circle" />
+        <ImageButton
+            android:id="@+id/ib_drawing_blue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:backgroundTint="#00FFFFFF"
+            app:tint="#1F5BC3"
+            app:layout_constraintStart_toEndOf="@+id/ib_drawing_green"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_circle" />
+        <ImageButton
+            android:id="@+id/ib_drawing_yellow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:backgroundTint="#00FFFFFF"
+            app:tint="#FFB700"
+            app:layout_constraintStart_toEndOf="@+id/ib_drawing_blue"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_circle" />
+        <ImageButton
+            android:id="@+id/ib_drawing_violet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:backgroundTint="#00FFFFFF"
+            app:tint="#CD43FF"
+            app:layout_constraintStart_toEndOf="@+id/ib_drawing_yellow"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_circle" />
+        <ImageButton
+            android:id="@+id/ib_drawing_teal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:backgroundTint="#00FFFFFF"
+            app:tint="#1FDBE1"
+            app:layout_constraintStart_toEndOf="@+id/ib_drawing_violet"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_circle" />
+
+        <FrameLayout
+            android:id="@+id/fl_adddrawing"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ib_drawing_black">
+
+        </FrameLayout>
+
+        <Button
+            android:id="@+id/btn_adddrawing_save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="32dp"
+            android:text="@string/adddrawing_save"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <ImageButton
+            android:id="@+id/ib_adddrawing_clear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="32dp"
+            android:backgroundTint="?attr/colorPrimary"
+            android:elevation="3dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:srcCompat="@drawable/ic_delete_white" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

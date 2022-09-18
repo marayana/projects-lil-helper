@@ -39,8 +39,8 @@ class SettingsFragment : Fragment() {
         viewModel.settingsAskDeleteNote.observe(viewLifecycleOwner) {
             binding.switchSettingsNotes.isChecked = it
         }
-        viewModel.settingsAskDeleteList.observe(viewLifecycleOwner) {
-            binding.switchSettingsLists.isChecked = it
+        viewModel.settingsAskDeleteDrawing.observe(viewLifecycleOwner) {
+            binding.switchSettingsDrawings.isChecked = it
         }
         viewModel.settingsLoadImgs.observe(viewLifecycleOwner) {
             binding.switchSettingsImgs.isChecked = it
@@ -49,8 +49,8 @@ class SettingsFragment : Fragment() {
         binding.switchSettingsNotes.setOnClickListener {
             viewModel.toggleSettingsSwitch("prefDeleteNote")
         }
-        binding.switchSettingsLists.setOnClickListener {
-            viewModel.toggleSettingsSwitch("prefDeleteList")
+        binding.switchSettingsDrawings.setOnClickListener {
+            viewModel.toggleSettingsSwitch("prefDeleteDrawing")
         }
         binding.switchSettingsImgs.setOnClickListener {
             viewModel.toggleSettingsSwitch("prefLoadImgs")

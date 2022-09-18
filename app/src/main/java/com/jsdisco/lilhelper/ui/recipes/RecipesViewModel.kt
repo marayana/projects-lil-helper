@@ -4,6 +4,7 @@ import android.app.Application
 import android.util.Log
 import androidx.lifecycle.*
 import com.jsdisco.lilhelper.data.AppRepository
+import com.jsdisco.lilhelper.data.local.models.Note
 import com.jsdisco.lilhelper.data.local.models.relations.RecipeWithIngredients
 import kotlinx.coroutines.launch
 
@@ -56,5 +57,27 @@ class RecipesViewModel(application: Application) : AndroidViewModel(application)
 
     fun resetLoadingStatus(){
         _loading.value = ApiStatus.DONE
+    }
+
+    fun createNoteFromRecipe(){
+        if (currRecipe.value != null){
+            val recipe = currRecipe.value!!
+            val excludedIngs =
+                settingsIngs.value?.filter { !it.si_included }?.map { it.si_name }
+
+            val ingItems = if (excludedIngs != null) {
+                val filtered =
+                    recipe.ingredients.filter { !excludedIngs.contains(it.i_name) }
+                filtered.joinToString("\n") { "${it.i_name} ${it.i_amount} ${it.i_unit} " }
+            } else {
+                recipe.ingredients.joinToString("\n") { "${it.i_name} ${it.i_amount} ${it.i_unit} " }
+            }
+
+            val noteFromRecipe = Note(title = recipe.recipe.r_title, content = ingItems)
+            viewModelScope.launch {
+                repo.insertNote(noteFromRecipe)
+            }
+        }
+
     }
 }

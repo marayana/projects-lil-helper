@@ -21,7 +21,7 @@ const val TAG = "AppRepository"
  * Keeps all data used by the app:
  *
  * - Notes: from roomDB
- * - Checklists: from roomDB
+ * - Drawings: from roomDB
  * - Recipes: from roomDB (or, if no recipes are stored, from the API)
  * - Settings: from sharedPreferences
  *
@@ -34,8 +34,8 @@ class AppRepository(private val database: AppDatabase) {
     /** NOTES */
     val notes: LiveData<List<Note>> = database.appDatabaseDao.getNotes()
 
-    /** CHECK LISTS */
-    val checklistItems: LiveData<List<ChecklistItem>> = database.appDatabaseDao.getChecklistItems()
+    /** DRAWINGS */
+    val drawings: LiveData<List<Drawing>> = database.appDatabaseDao.getDrawings()
 
     /** RECIPES */
     private val _recipes = MutableLiveData<List<RecipeWithIngredients>>()
@@ -49,7 +49,7 @@ class AppRepository(private val database: AppDatabase) {
     val settingsIngs: LiveData<List<SettingsIngredient>> = _settingsIngs
 
     val settingsAskDeleteNote = MutableLiveData(true)
-    val settingsAskDeleteList = MutableLiveData(true)
+    val settingsAskDeleteDrawing = MutableLiveData(true)
     val settingsLoadImgs = MutableLiveData(false)
 
     private lateinit var prefs: Prefs
@@ -81,33 +81,23 @@ class AppRepository(private val database: AppDatabase) {
         }
     }
 
+    /** DRAWINGS - PUBLIC */
 
-    /** LISTS - PUBLIC */
-
-    suspend fun insertChecklistItems(items: List<ChecklistItem>){
+    suspend fun insertDrawing(drawing: Drawing){
         try {
-            database.appDatabaseDao.insertManyChecklistItems(items)
+            database.appDatabaseDao.insertDrawing(drawing)
         } catch(e: Exception){
-            Log.e(TAG, "Error inserting checklistItems into database: $e")
+            Log.e(TAG, "Error inserting drawing into database: $e")
         }
     }
 
-    suspend fun updateChecklistItem(item: ChecklistItem){
-        try{
-            database.appDatabaseDao.updateChecklistItem(item)
+    suspend fun deleteDrawing(id: Long){
+        try {
+            database.appDatabaseDao.deleteDrawingById(id)
         } catch(e: Exception){
-            Log.e(TAG, "Error updating checklistItem in database: $e")
+            Log.e(TAG, "Error deleting drawing from database: $e")
         }
     }
-
-    suspend fun deleteChecklistItems(listId: UUID){
-        try{
-            database.appDatabaseDao.deleteChecklistItems(listId)
-        } catch(e: Exception){
-            Log.e(TAG, "Error deleting checklistItems from database: $e")
-        }
-    }
-
 
     /** RECIPES AND INGREDIENTS */
 
@@ -214,7 +204,7 @@ class AppRepository(private val database: AppDatabase) {
     fun initSettings(context: Context){
         prefs = Prefs(context)
         settingsAskDeleteNote.value = prefs.getPref("prefDeleteNote")
-        settingsAskDeleteList.value = prefs.getPref("prefDeleteList")
+        settingsAskDeleteDrawing.value = prefs.getPref("prefDeleteDrawing")
         settingsLoadImgs.value = prefs.getPref("prefLoadImgs")
     }
 
@@ -223,9 +213,9 @@ class AppRepository(private val database: AppDatabase) {
             settingsAskDeleteNote.value?.let{settingsAskDeleteNote.value = !it}
             prefs.setPref(key, settingsAskDeleteNote.value ?: true)
         }
-        if (key == "prefDeleteList"){
-            settingsAskDeleteList.value?.let{settingsAskDeleteList.value = !it}
-            prefs.setPref(key, settingsAskDeleteList.value ?: true)
+        if (key == "prefDeleteDrawing"){
+            settingsAskDeleteDrawing.value?.let{settingsAskDeleteDrawing.value = !it}
+            prefs.setPref(key, settingsAskDeleteDrawing.value ?: true)
         }
         if (key == "prefLoadImgs"){
             settingsLoadImgs.value?.let{settingsLoadImgs.value = !it}

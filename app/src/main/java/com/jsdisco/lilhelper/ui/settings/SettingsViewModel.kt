@@ -14,7 +14,7 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
 
     /** from sharedPreferences */
     val settingsAskDeleteNote = repo.settingsAskDeleteNote
-    val settingsAskDeleteList = repo.settingsAskDeleteList
+    val settingsAskDeleteDrawing = repo.settingsAskDeleteDrawing
     val settingsLoadImgs = repo.settingsLoadImgs
 
     /** from roomDB */

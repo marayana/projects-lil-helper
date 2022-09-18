@@ -5,12 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <CheckBox
-        android:id="@+id/cb_list_item_checklist_item"
-        style="@style/custom_font"
+    <ImageView
+        android:id="@+id/iv_drawing"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:cropToPadding="true"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="Checkbox Label" />
+        tools:srcCompat="@tools:sample/avatars" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -16,6 +16,7 @@ import com.jsdisco.lilhelper.R
 import com.jsdisco.lilhelper.data.local.models.relations.RecipeWithIngredients
 import com.jsdisco.lilhelper.data.remote.APITOKEN
 import com.jsdisco.lilhelper.data.remote.BASE_URL
+import com.jsdisco.lilhelper.ui.recipes.RecipesFragmentDirections
 
 class RecipesAdapter(
     private var dataset: List<RecipeWithIngredients>,
@@ -57,12 +58,8 @@ class RecipesAdapter(
             }
         }
 
-
         holder.cvRecipe.setOnClickListener {
-            val bundle = Bundle()
-            bundle.putString("recipeTitle", recipe.recipe.r_title)
-            bundle.putString("recipeId", recipe.recipe.r_id)
-            holder.itemView.findNavController().navigate(R.id.action_fragmentRecipes_to_fragmentRecipeDetails, bundle)
+            holder.itemView.findNavController().navigate(RecipesFragmentDirections.actionFragmentRecipesToFragmentRecipeDetails(recipe.recipe.r_title, recipe.recipe.r_id))
         }
     }
 

@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity() {
             setOf(
                 R.id.fragmentHome,
                 R.id.fragmentNotes,
-                R.id.fragmentChecklists,
+                R.id.fragmentDrawings,
                 R.id.fragmentRecipes,
                 R.id.fragmentSettings
             )
@@ -59,8 +59,6 @@ class MainActivity : AppCompatActivity() {
 
             return@setOnItemSelectedListener true
         }
-
-        //binding.
     }
 
     // back button in toolbar
@@ -69,7 +67,5 @@ class MainActivity : AppCompatActivity() {
     }
 }
 
-/*
-*   TODO: cleanup
-*   TODO: comments
-*  */
+/* TODO try lower SDK
+*   TODO layout colour buttons on "add drawing" screen */

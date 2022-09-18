@@ -10,6 +10,34 @@ import java.util.*
 @Dao
 interface AppDatabaseDao {
 
+    // NOTES TABLE
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertNote(note: Note)
+
+    @Update
+    suspend fun updateNote(note: Note)
+
+    @Query("SELECT * FROM Note")
+    fun getNotes() : LiveData<List<Note>>
+
+    @Query("DELETE FROM Note WHERE id = :id")
+    suspend fun deleteNoteById(id: Long)
+
+    @Query("DELETE FROM Note")
+    suspend fun deleteAllNotes()
+
+
+    // DRAWINGS TABLE
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertDrawing(drawing: Drawing)
+
+    @Query("DELETE FROM Drawing WHERE id = :id")
+    suspend fun deleteDrawingById(id: Long)
+
+    @Query("SELECT * FROM Drawing")
+    fun getDrawings() : LiveData<List<Drawing>>
+
+
     // RECIPES TABLES
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAllRecipes(recipes: List<Recipe>)
@@ -53,39 +81,6 @@ interface AppDatabaseDao {
     fun deleteRecipeIngredientCrossRef()
 
 
-    // CHECKLISTITEMS TABLE
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertChecklistItem(item: ChecklistItem)
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertManyChecklistItems(items: List<ChecklistItem>)
-
-    @Update
-    suspend fun updateChecklistItem(item: ChecklistItem)
-
-    @Query("DELETE FROM ChecklistItem WHERE cl_id = :listId")
-    suspend fun deleteChecklistItems(listId: UUID)
-
-    @Query("SELECT * FROM ChecklistItem")
-    fun getChecklistItems() : LiveData<List<ChecklistItem>>
-
-
-    // NOTES TABLE
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertNote(note: Note)
-
-    @Update
-    suspend fun updateNote(note: Note)
-
-    @Query("SELECT * FROM Note")
-    fun getNotes() : LiveData<List<Note>>
-
-    @Query("DELETE FROM Note WHERE id = :id")
-    suspend fun deleteNoteById(id: Long)
-
-    @Query("DELETE FROM Note")
-    suspend fun deleteAllNotes()
 
 
     // SETTINGS INGREDIENTS
