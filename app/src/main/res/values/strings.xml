@@ -3,63 +3,63 @@
 
     <!-- Bottom Nav -->
     <string name="bottomnav_home">Home</string>
-    <string name="bottomnav_notes">Notizen</string>
-    <string name="bottomnav_drawings">Zeichnungen</string>
-    <string name="bottomnav_recipes">Rezepte</string>
+    <string name="bottomnav_notes">Notes</string>
+    <string name="bottomnav_drawings">Drawings</string>
+    <string name="bottomnav_recipes">Recipes</string>
     <string name="bottomnav_settings">Settings</string>
 
     <!-- Action Bar -->
     <string name="actionbar_home">lilHelper</string>
-    <string name="actionbar_notes">Notizen</string>
-    <string name="actionbar_add_note">Notiz hinzufügen</string>
-    <string name="actionbar_edit_note">Notiz bearbeiten</string>
-    <string name="actionbar_drawings">Zeichnungen</string>
-    <string name="actionbar_add_drawing">Zeichnung hinzufügen</string>
+    <string name="actionbar_notes">Notes</string>
+    <string name="actionbar_add_note">Add Note</string>
+    <string name="actionbar_edit_note">Edit Note</string>
+    <string name="actionbar_drawings">Drawings</string>
+    <string name="actionbar_add_drawing">Add Drawing</string>
     <string name="actionbar_drawing_details">{drawingTitle}</string>
-    <string name="actionbar_recipes">Rezepte</string>
+    <string name="actionbar_recipes">Recipes</string>
     <string name="actionbar_recipe_details">{recipeTitle}</string>
-    <string name="actionbar_settings">Einstellungen</string>
+    <string name="actionbar_settings">Settings</string>
 
 
     <!-- Notes -->
-    <string name="addnote_hint_note_title">Titel</string>
+    <string name="addnote_hint_note_title">Title</string>
     <string name="addnote_hint_note_content">Text</string>
-    <string name="addnote_save">Notiz speichern</string>
-    <string name="editnote_save">Notiz speichern</string>
-    <string name="fab_add_note_content_desc">neue Notiz</string>
+    <string name="addnote_save">Save Note</string>
+    <string name="editnote_save">Save Note</string>
+    <string name="fab_add_note_content_desc">new note</string>
 
     <!-- Drawings -->
-    <string name="adddrawing_save">Zeichnung speichern</string>
+    <string name="adddrawing_save">Save Drawing</string>
 
-    <string name="fab_add_drawing_content_desc">neue Zeichnung</string>
+    <string name="fab_add_drawing_content_desc">new drawing</string>
 
     <!-- Recipes -->
-    <string name="recipes_title">Rezepte</string>
+    <string name="recipes_title">Recipes</string>
 
-    <string name="cat_0">Alle</string>
+    <string name="cat_0">All</string>
     <string name="cat_1">Warm</string>
-    <string name="cat_2">Kalt</string>
-    <string name="cat_3">Salat</string>
-    <string name="cat_4">Suppe</string>
-    <string name="cat_5">Basis</string>
+    <string name="cat_2">Cold</string>
+    <string name="cat_3">Salad</string>
+    <string name="cat_4">Soup</string>
+    <string name="cat_5">Basic</string>
 
     <!-- Recipe Details -->
-    <string name="recipe_details_ings_title">Zutaten</string>
-    <string name="recipe_details_instr_title">Anleitung</string>
-    <string name="recipe_details_create_list">Liste erstellen</string>
+    <string name="recipe_details_ings_title">Ingredients</string>
+    <string name="recipe_details_instr_title">Instructions</string>
+    <string name="recipe_details_create_list">Create shopping list</string>
 
     <!-- Settings -->
     <string name="settings_title">Settings</string>
-    <string name="settings_label_notes">Erneut fragen, bevor eine Notiz gelöscht wird</string>
-    <string name="settings_label_drawings">Erneut fragen, bevor eine Zeichnung gelöscht wird</string>
-    <string name="settings_label_imgs">Rezeptebilder aus dem Internet laden</string>
-    <string name="settings_ings_title">Zutaten, die in aus Rezepten erstellten Listen erscheinen:</string>
+    <string name="settings_label_notes">Ask again before deleting a note</string>
+    <string name="settings_label_drawings">Ask again before deleting a drawing</string>
+    <string name="settings_label_imgs">Load recipe images from the internet</string>
+    <string name="settings_ings_title">Ingredients included in shopping list from recipe:</string>
 
     <!-- Delete Dialogs -->
-    <string name="delete_dialog_title_notes">Diese Notiz endgültig löschen?</string>
-    <string name="delete_dialog_title_drawings">Diese Zeichnung endgültig löschen?</string>
-    <string name="delete_dialog_dont_ask_again">Nicht erneut fragen</string>
+    <string name="delete_dialog_title_notes">Permanently delete this note?</string>
+    <string name="delete_dialog_title_drawings">Permanently delete this drawing?</string>
+    <string name="delete_dialog_dont_ask_again">Don\'t ask again</string>
     <string name="delete_dialog_positive_button">OK</string>
-    <string name="delete_dialog_negative_button">Abbrechen</string>
+    <string name="delete_dialog_negative_button">Cancel</string>
 
 </resources>

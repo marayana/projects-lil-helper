@@ -1,5 +1,5 @@
 package com.jsdisco.lilhelper.data.remote
 
 object ExampleToken {
-    const val TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InRlbXAiLCJpYXQiOjE2NjAwNTE2MjcsImV4cCI6MTY2MzY4MDQyN30.qQDN6JWXVTpWdic_O-0I8gsd6ZNIyF5KztFTPdNuoYw"
+    const val TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InRlbXAiLCJpYXQiOjE2NjUzMjE3MjQsImV4cCI6MTc1MTcyMTcyNH0._6rA-FdG6jcxKd1Rl4koNBI7llYAXk1iBogp2xLAK9U"
 }

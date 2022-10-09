@@ -1,6 +1,7 @@
 package com.jsdisco.lilhelper.ui.drawings
 
 import android.app.Application
+import android.util.Log
 import androidx.core.content.res.ResourcesCompat
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
@@ -33,10 +34,15 @@ class DrawingsViewModel(application: Application) : AndroidViewModel(application
 
 
     fun saveDrawing(path: String, title: String){
-        val drawing = Drawing(path = path, title = title)
-        viewModelScope.launch(Dispatchers.IO){
-            repo.insertDrawing(drawing)
+        try {
+            val drawing = Drawing(path = path, title = title)
+            viewModelScope.launch(Dispatchers.IO){
+                repo.insertDrawing(drawing)
+            }
+        } catch(e: Exception){
+            Log.e("DrawingsViewModel", "Error while saving a drawing: $e")
         }
+
     }
 
     fun deleteDrawing(id: Long){

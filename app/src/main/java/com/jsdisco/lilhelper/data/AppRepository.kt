@@ -12,7 +12,6 @@ import com.jsdisco.lilhelper.data.remote.RecipeApi
 import com.jsdisco.lilhelper.data.remote.models.RecipeRemote
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import java.util.*
 
 const val TAG = "AppRepository"
 
@@ -149,7 +148,7 @@ class AppRepository(private val database: AppDatabase) {
         try {
             val hasNoSettingsIngs = database.appDatabaseDao.getSettingsIngsCount() == 0
             if (hasNoSettingsIngs){
-                val excluded = listOf("Curry", "Dill", "Gemüsebrühe", "Gewürze", "Kurkuma", "Liebstöckel", "Lorbeer", "Majoran", "Mehl", "Muskat", "Olivenöl", "Oregano", "Paprika (rosenscharf)", "Pfeffer", "Pfeffer (Cayenne)", "Pfeffer (schwarz)", "Rapsöl", "Rauchsalz", "Rohrohrzucker", "Salz", "Senf", "Thymian", "Wasser", "Zucker" )
+                val excluded = listOf("Curry", "Dill", "Gemüsebrühe", "Gewürze", "Kurkuma", "Liebstöckel", "Lorbeer", "Majoran", "Mehl", "Muskat", "Olivenöl", "Oregano", "Paprika (rosenscharf)", "Pfeffer", "Pfeffer (Cayenne)", "Pfeffer (schwarz)", "Rapsöl", "Rauchsalz", "Rohrohrzucker", "Salz", "Senf", "Thymian", "Wasser", "Zucker", "Salt", "Pepper", "Sugar" )
 
                 val allIngs = database.appDatabaseDao.getIngredients()
                 val allIngNames = allIngs.map { it.i_name }.distinct()

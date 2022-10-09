@@ -12,8 +12,8 @@ import retrofit2.http.GET
 
 const val BASE_URL = "https://recipes.jsdisco.dev/"
 
-const val APITOKEN = Token.TOKEN
-//const val APITOKEN = ExampleToken.TOKEN
+//const val APITOKEN = Token.TOKEN
+const val APITOKEN = ExampleToken.TOKEN
 
 private val client: OkHttpClient = OkHttpClient.Builder().addInterceptor { chain ->
     val newRequest: Request = chain.request().newBuilder().addHeader("Authorization", "Bearer $APITOKEN").build()

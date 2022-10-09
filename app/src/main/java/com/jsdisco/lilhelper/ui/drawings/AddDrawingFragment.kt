@@ -83,7 +83,6 @@ class AddDrawingFragment : Fragment() {
             } catch(e: Exception){
                 Log.e("AddDrawingFragment", "Error saving drawing: $e")
             }
-
         }
     }
 

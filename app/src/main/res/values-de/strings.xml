@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">lilHelper</string>
+
+    <!-- Bottom Nav -->
+    <string name="bottomnav_home">Home</string>
+    <string name="bottomnav_notes">Notizen</string>
+    <string name="bottomnav_drawings">Zeichnungen</string>
+    <string name="bottomnav_recipes">Rezepte</string>
+    <string name="bottomnav_settings">Settings</string>
+
+    <!-- Action Bar -->
+    <string name="actionbar_home">lilHelper</string>
+    <string name="actionbar_notes">Notizen</string>
+    <string name="actionbar_add_note">Notiz hinzufügen</string>
+    <string name="actionbar_edit_note">Notiz bearbeiten</string>
+    <string name="actionbar_drawings">Zeichnungen</string>
+    <string name="actionbar_add_drawing">Zeichnung hinzufügen</string>
+    <string name="actionbar_drawing_details">{drawingTitle}</string>
+    <string name="actionbar_recipes">Rezepte</string>
+    <string name="actionbar_recipe_details">{recipeTitle}</string>
+    <string name="actionbar_settings">Einstellungen</string>
+
+
+    <!-- Notes -->
+    <string name="addnote_hint_note_title">Titel</string>
+    <string name="addnote_hint_note_content">Text</string>
+    <string name="addnote_save">Notiz speichern</string>
+    <string name="editnote_save">Notiz speichern</string>
+    <string name="fab_add_note_content_desc">neue Notiz</string>
+
+    <!-- Drawings -->
+    <string name="adddrawing_save">Zeichnung speichern</string>
+
+    <string name="fab_add_drawing_content_desc">neue Zeichnung</string>
+
+    <!-- Recipes -->
+    <string name="recipes_title">Rezepte</string>
+
+    <string name="cat_0">Alle</string>
+    <string name="cat_1">Warm</string>
+    <string name="cat_2">Kalt</string>
+    <string name="cat_3">Salat</string>
+    <string name="cat_4">Suppe</string>
+    <string name="cat_5">Basis</string>
+
+    <!-- Recipe Details -->
+    <string name="recipe_details_ings_title">Zutaten</string>
+    <string name="recipe_details_instr_title">Anleitung</string>
+    <string name="recipe_details_create_list">Liste erstellen</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Settings</string>
+    <string name="settings_label_notes">Erneut fragen, bevor eine Notiz gelöscht wird</string>
+    <string name="settings_label_drawings">Erneut fragen, bevor eine Zeichnung gelöscht wird</string>
+    <string name="settings_label_imgs">Rezeptebilder aus dem Internet laden</string>
+    <string name="settings_ings_title">Zutaten, die in aus Rezepten erstellten Listen erscheinen:</string>
+
+    <!-- Delete Dialogs -->
+    <string name="delete_dialog_title_notes">Diese Notiz endgültig löschen?</string>
+    <string name="delete_dialog_title_drawings">Diese Zeichnung endgültig löschen?</string>
+    <string name="delete_dialog_dont_ask_again">Nicht erneut fragen</string>
+    <string name="delete_dialog_positive_button">OK</string>
+    <string name="delete_dialog_negative_button">Abbrechen</string>
+</resources>
