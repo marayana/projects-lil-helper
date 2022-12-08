@@ -122,7 +122,7 @@ class AppRepository(private val database: AppDatabase) {
                 recipeFromApi.recipeCategory.contains("salat"),
                 recipeFromApi.recipeCategory.contains("suppe"),
                 recipeFromApi.recipeCategory.contains("basis"),
-                recipeFromApi.recipeCategory.contains("süss")
+                recipeFromApi.recipeCategory.contains("süß")
             )
             database.appDatabaseDao.insertRecipe(newRecipe)
             recipeFromApi.ingredients.forEach{

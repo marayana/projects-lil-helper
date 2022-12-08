@@ -17,7 +17,7 @@ class RecipesViewModel(application: Application) : AndroidViewModel(application)
     val recipes = repo.recipes
     val currRecipe = repo.currRecipe
     val loadImgs = repo.settingsLoadImgs
-    val settingsIngs = repo.settingsIngs
+    private val settingsIngs = repo.settingsIngs
 
     private val _loading = MutableLiveData<ApiStatus>()
     val loading: LiveData<ApiStatus> = _loading
@@ -42,6 +42,7 @@ class RecipesViewModel(application: Application) : AndroidViewModel(application)
                 "cold" -> recipe.recipe.r_cat_cold
                 "salad" -> recipe.recipe.r_cat_salad
                 "soup" -> recipe.recipe.r_cat_soup
+                "sweet" -> recipe.recipe.r_cat_sweet
                 "base" -> recipe.recipe.r_cat_base
                 else -> true
             }

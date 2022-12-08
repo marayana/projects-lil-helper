@@ -2,6 +2,7 @@ package com.jsdisco.lilhelper.ui.recipes
 
 import android.app.AlertDialog
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -51,6 +52,7 @@ class RecipesFragment : Fragment() {
                     binding.chipCatCold.id -> "cold"
                     binding.chipCatSalad.id -> "salad"
                     binding.chipCatSoup.id -> "soup"
+                    binding.chipCatSweet.id -> "sweet"
                     binding.chipCatBase.id -> "base"
                     else -> "all"
                 }

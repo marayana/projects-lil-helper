@@ -42,6 +42,7 @@
     <string name="cat_3">Salad</string>
     <string name="cat_4">Soup</string>
     <string name="cat_5">Basic</string>
+    <string name="cat_6">Sweet</string>
 
     <!-- Recipe Details -->
     <string name="recipe_details_ings_title">Ingredients</string>

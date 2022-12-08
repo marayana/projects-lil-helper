@@ -43,6 +43,7 @@
     <string name="cat_3">Salat</string>
     <string name="cat_4">Suppe</string>
     <string name="cat_5">Basis</string>
+    <string name="cat_6">Süss</string>
 
     <!-- Recipe Details -->
     <string name="recipe_details_ings_title">Zutaten</string>
